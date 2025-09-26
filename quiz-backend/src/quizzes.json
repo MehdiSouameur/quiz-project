@@ -1,0 +1,30 @@
+[
+  {
+    "quizId": "quiz-123",
+    "name": "General Knowledge Quiz",
+    "questions": [
+      {
+        "id": 1,
+        "title": "What is the capital of France?",
+        "options": [
+          { "id": "a", "text": "Paris" },
+          { "id": "b", "text": "London" },
+          { "id": "c", "text": "Berlin" },
+          { "id": "d", "text": "Rome" }
+        ],
+        "answer": "a" 
+      },
+      {
+        "id": 2,
+        "title": "What is 2 + 2?",
+        "options": [
+          { "id": "a", "text": "3" },
+          { "id": "b", "text": "4" },
+          { "id": "c", "text": "5" },
+          { "id": "d", "text": "22" }
+        ],
+        "answer": "b" 
+      }
+    ]
+  }
+]

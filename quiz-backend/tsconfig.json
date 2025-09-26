@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "module": "esnext",   // or "esnext", depending on your setup
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "es2017",
+    "outDir": "./dist"
+  },
+  "include": ["src"]
+}
+
