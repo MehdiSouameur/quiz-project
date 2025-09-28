@@ -4,7 +4,7 @@
     "name": "General Knowledge Quiz",
     "questions": [
       {
-        "id": 1,
+        "id": 0,
         "title": "What is the capital of France?",
         "options": [
           { "id": "a", "text": "Paris" },
@@ -15,7 +15,7 @@
         "answer": "a" 
       },
       {
-        "id": 2,
+        "id": 1,
         "title": "What is 2 + 2?",
         "options": [
           { "id": "a", "text": "3" },

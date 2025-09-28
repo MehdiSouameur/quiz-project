@@ -30,11 +30,12 @@ let curGame: GameSession | null = null;
 
 const allQuizzes: Quiz[] = quizzes;
 
-app.get('/api/quiz/:quizId', (req: Request, res: Response) => {
+app.get('/api/quiz/start/:quizId', (req: Request, res: Response) => {
     const { quizId } = req.params
     console.log("Request received to start ", quizId);
     const quiz = allQuizzes.find(q => q.quizId === quizId);
     if (!quiz) return res.status(404).json({ error: 'Quiz not found' });
+
 
     const jsonQuestions: Question[] = quiz.questions.map((q) => ({
         id: q.id,
@@ -56,10 +57,37 @@ app.get('/api/quiz/:quizId', (req: Request, res: Response) => {
         isFinished: false,
         createdAt: new Date().toISOString(),
     }
+    console.log(curGame)
+
+    return res.json({
+    gameId: curGame.gameId,
+    question: curGame.questions[0],
+    });
+});
+
+app.post('/api/quiz/evaluate', (req: Request, res: Response) => {
+    const { gameId, questionId, answer } = req.body
+
+    if (gameId != curGame?.gameId || !curGame) return res.status(404).json({ error: 'Game not found' });
+    console.log("Game found, evaluations started")
+    console.log("Searching Question: " + questionId)
+    const question = curGame?.questions.find(q => q.id === questionId);
+    if (!question) {
+        return res.status(404).json({ error: 'Question not found' });
+    }
+
+    const isCorrect = question.answer === answer;
+    if (isCorrect) curGame.score++;
+    curGame.answers.push({ questionId: questionId, selected: answer, correct: isCorrect });
 
     console.log(curGame)
 
-    return res.json(curGame.questions[1]);
+    res.json({
+        isCorrect,
+        score: curGame.score,
+        gameId: curGame.gameId,
+        question: curGame.questions[curGame.currentQuestionIndex + 1] || null,
+    });
 });
 
 app.listen(3001, () => console.log('Quiz backend running on port 3001'));
