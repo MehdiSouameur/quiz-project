@@ -81,12 +81,12 @@ app.post('/api/quiz/evaluate', (req: Request, res: Response) => {
     curGame.answers.push({ questionId: questionId, selected: answer, correct: isCorrect });
 
     console.log(curGame)
-
+    curGame.currentQuestionIndex += 1
     res.json({
-        isCorrect,
+        answer: question.answer,
         score: curGame.score,
         gameId: curGame.gameId,
-        question: curGame.questions[curGame.currentQuestionIndex + 1] || null,
+        question: curGame.questions[curGame.currentQuestionIndex] || null,
     });
 });
 

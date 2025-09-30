@@ -1,29 +1,117 @@
 [
   {
     "quizId": "quiz-123",
-    "name": "General Knowledge Quiz",
+    "name": "Quiz de Connaissances Générales",
     "questions": [
       {
         "id": 0,
-        "title": "What is the capital of France?",
+        "title": "Quelle est la couleur du ciel par temps clair ?",
         "options": [
-          { "id": "a", "text": "Paris" },
-          { "id": "b", "text": "London" },
-          { "id": "c", "text": "Berlin" },
-          { "id": "d", "text": "Rome" }
+          { "id": "a", "text": "Bleu" },
+          { "id": "b", "text": "Vert" },
+          { "id": "c", "text": "Rouge" },
+          { "id": "d", "text": "Jaune" }
         ],
-        "answer": "a" 
+        "answer": "a"
       },
       {
         "id": 1,
-        "title": "What is 2 + 2?",
+        "title": "Combien y a-t-il de doigts sur une main ?",
         "options": [
-          { "id": "a", "text": "3" },
-          { "id": "b", "text": "4" },
-          { "id": "c", "text": "5" },
-          { "id": "d", "text": "22" }
+          { "id": "a", "text": "4" },
+          { "id": "b", "text": "5" },
+          { "id": "c", "text": "6" },
+          { "id": "d", "text": "3" }
         ],
-        "answer": "b" 
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Quel animal dit 'miaou' ?",
+        "options": [
+          { "id": "a", "text": "Chien" },
+          { "id": "b", "text": "Chat" },
+          { "id": "c", "text": "Oiseau" },
+          { "id": "d", "text": "Cheval" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 3,
+        "title": "Quelle est la première lettre de l'alphabet ?",
+        "options": [
+          { "id": "a", "text": "A" },
+          { "id": "b", "text": "B" },
+          { "id": "c", "text": "C" },
+          { "id": "d", "text": "D" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 4,
+        "title": "Combien y a-t-il de jours dans une semaine ?",
+        "options": [
+          { "id": "a", "text": "5" },
+          { "id": "b", "text": "6" },
+          { "id": "c", "text": "7" },
+          { "id": "d", "text": "8" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 5,
+        "title": "Quel fruit est jaune et courbé ?",
+        "options": [
+          { "id": "a", "text": "Banane" },
+          { "id": "b", "text": "Pomme" },
+          { "id": "c", "text": "Cerise" },
+          { "id": "d", "text": "Orange" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 6,
+        "title": "Quel animal a une trompe ?",
+        "options": [
+          { "id": "a", "text": "Éléphant" },
+          { "id": "b", "text": "Lion" },
+          { "id": "c", "text": "Singe" },
+          { "id": "d", "text": "Chien" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 7,
+        "title": "Quel est le contraire de 'grand' ?",
+        "options": [
+          { "id": "a", "text": "Petit" },
+          { "id": "b", "text": "Moyen" },
+          { "id": "c", "text": "Long" },
+          { "id": "d", "text": "Épais" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 8,
+        "title": "Combien de couleurs y a-t-il dans un arc-en-ciel ?",
+        "options": [
+          { "id": "a", "text": "5" },
+          { "id": "b", "text": "6" },
+          { "id": "c", "text": "7" },
+          { "id": "d", "text": "8" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 9,
+        "title": "Quel animal vit dans la ferme et donne du lait ?",
+        "options": [
+          { "id": "a", "text": "Vache" },
+          { "id": "b", "text": "Poule" },
+          { "id": "c", "text": "Cheval" },
+          { "id": "d", "text": "Cochon" }
+        ],
+        "answer": "a"
       }
     ]
   }
