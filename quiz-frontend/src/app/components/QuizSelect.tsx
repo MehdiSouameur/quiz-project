@@ -15,7 +15,7 @@ export default function QuizSelect({
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer flex flex-col w-full border border-white rounded-lg bg-transparent overflow-hidden 
+      className="cursor-pointer flex flex-col w-64 border border-white rounded-lg bg-transparent overflow-hidden 
                  transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
     >
       {/* Title */}

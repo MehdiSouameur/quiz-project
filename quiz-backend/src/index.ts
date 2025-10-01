@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import quizzes from './quizzes.json' assert { type: 'json' };;
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 
 const app = express();
@@ -29,6 +32,33 @@ interface GameSession {
 let curGame: GameSession | null = null;
 
 const allQuizzes: Quiz[] = quizzes;
+// Only needed in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.get('/api/quiz/retrieve', (req: Request, res: Response) => {
+  try {
+    console.log("Retrieving all quizzess...")
+    // Read the JSON file
+    const filePath = path.join(__dirname, "quizzes.json"); // adjust path
+    const rawData = fs.readFileSync(filePath, 'utf-8');
+    const quizzes = JSON.parse(rawData);
+
+    // Map to only quizId, name, description
+    const quizList = quizzes.map((q: any) => ({
+      quizId: q.quizId,
+      name: q.name,
+      description: q.description
+    }));
+
+    console.log(quizList);
+
+    res.json(quizList);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to retrieve quizzes" });
+  }
+});
 
 app.get('/api/quiz/start/:quizId', (req: Request, res: Response) => {
     const { quizId } = req.params
@@ -68,6 +98,7 @@ app.get('/api/quiz/start/:quizId', (req: Request, res: Response) => {
 app.post('/api/quiz/evaluate', (req: Request, res: Response) => {
     const { gameId, questionId, answer } = req.body
 
+    console.log("evaluating for " + gameId)
     if (gameId != curGame?.gameId || !curGame) return res.status(404).json({ error: 'Game not found' });
     console.log("Game found, evaluations started")
     console.log("Searching Question: " + questionId)

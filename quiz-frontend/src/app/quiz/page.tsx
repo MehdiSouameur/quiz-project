@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import QuizButton from "../components/QuizButton";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SubmitButton from "../components/SubmitButton";
 
 interface Option {
@@ -27,9 +27,13 @@ interface QuizData {
 }
 
 
-export default function quiz() {
+export default function Quiz() {
+  
   const router = useRouter();
+  const startCalledRef = useRef(false);
+  
   const [quizData, setQuizData] = useState<QuizData | null>(null);
+  
 
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const selectedAnswerRef = useRef<string | null>(null);
@@ -37,22 +41,26 @@ export default function quiz() {
   const [showResults, setShowResults] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(100); // percentage
-  const totalTime = 3; // seconds
+  const totalTime = 10; // seconds
   const progressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const finishTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const nextQuestionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-
+  const quizId = useSearchParams().get("id") ?? "default-id";
 
   const startQuiz = async () => {
-    const res = await fetch("http://localhost:3001/api/quiz/start/quiz-123");
+    console.log("starting quiz");
+    const res = await fetch("http://localhost:3001/api/quiz/start/" + quizId);
     const data = await res.json();
     setQuizData(data);
   };
 
   // Start Quiz
   useEffect(() => {
-    startQuiz();
+    if (!startCalledRef.current) {
+      startQuiz();
+      startCalledRef.current = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -106,7 +114,9 @@ export default function quiz() {
       bar.style.width = computedWidth;
     }
 
-    const res = await fetch("http://localhost:3001/api/quiz/evaluate", {
+    console.log("payload", { gameId: quizData?.gameId, questionId: quizData?.question.id, answer });
+    console.log("Posting...", `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/evaluate`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quiz/evaluate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -115,6 +125,9 @@ export default function quiz() {
         answer: answer ?? null,
       }),
     });
+
+    console.log("Received!");
+
 
     const data = await res.json();
     setCorrectAnswer(data.answer);

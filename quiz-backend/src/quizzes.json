@@ -1,117 +1,703 @@
 [
   {
-    "quizId": "quiz-123",
-    "name": "Quiz de Connaissances Générales",
+    "quizId": "quiz-001",
+    "name": "General Knowledge",
+    "description": "A diverse quiz testing your knowledge on various topics.",
     "questions": [
       {
         "id": 0,
-        "title": "Quelle est la couleur du ciel par temps clair ?",
+        "title": "What is the capital of France?",
         "options": [
-          { "id": "a", "text": "Bleu" },
-          { "id": "b", "text": "Vert" },
-          { "id": "c", "text": "Rouge" },
-          { "id": "d", "text": "Jaune" }
+          { "id": "a", "text": "Berlin" },
+          { "id": "b", "text": "Madrid" },
+          { "id": "c", "text": "Paris" },
+          { "id": "d", "text": "Rome" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 1,
+        "title": "Who wrote '1984'?",
+        "options": [
+          { "id": "a", "text": "George Orwell" },
+          { "id": "b", "text": "Aldous Huxley" },
+          { "id": "c", "text": "J.K. Rowling" },
+          { "id": "d", "text": "Ernest Hemingway" }
         ],
         "answer": "a"
       },
       {
-        "id": 1,
-        "title": "Combien y a-t-il de doigts sur une main ?",
-        "options": [
-          { "id": "a", "text": "4" },
-          { "id": "b", "text": "5" },
-          { "id": "c", "text": "6" },
-          { "id": "d", "text": "3" }
-        ],
-        "answer": "b"
-      },
-      {
         "id": 2,
-        "title": "Quel animal dit 'miaou' ?",
+        "title": "What is the largest planet in our solar system?",
         "options": [
-          { "id": "a", "text": "Chien" },
-          { "id": "b", "text": "Chat" },
-          { "id": "c", "text": "Oiseau" },
-          { "id": "d", "text": "Cheval" }
+          { "id": "a", "text": "Earth" },
+          { "id": "b", "text": "Jupiter" },
+          { "id": "c", "text": "Saturn" },
+          { "id": "d", "text": "Mars" }
         ],
         "answer": "b"
       },
       {
         "id": 3,
-        "title": "Quelle est la première lettre de l'alphabet ?",
+        "title": "In what year did the Titanic sink?",
         "options": [
-          { "id": "a", "text": "A" },
-          { "id": "b", "text": "B" },
-          { "id": "c", "text": "C" },
-          { "id": "d", "text": "D" }
+          { "id": "a", "text": "1905" },
+          { "id": "b", "text": "1912" },
+          { "id": "c", "text": "1920" },
+          { "id": "d", "text": "1930" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "Which element has the chemical symbol 'O'?",
+        "options": [
+          { "id": "a", "text": "Oxygen" },
+          { "id": "b", "text": "Osmium" },
+          { "id": "c", "text": "Oganesson" },
+          { "id": "d", "text": "Ozone" }
         ],
         "answer": "a"
       },
       {
-        "id": 4,
-        "title": "Combien y a-t-il de jours dans une semaine ?",
+        "id": 5,
+        "title": "Who painted the Mona Lisa?",
         "options": [
-          { "id": "a", "text": "5" },
-          { "id": "b", "text": "6" },
-          { "id": "c", "text": "7" },
-          { "id": "d", "text": "8" }
+          { "id": "a", "text": "Vincent van Gogh" },
+          { "id": "b", "text": "Leonardo da Vinci" },
+          { "id": "c", "text": "Pablo Picasso" },
+          { "id": "d", "text": "Claude Monet" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "What is the smallest country in the world?",
+        "options": [
+          { "id": "a", "text": "Monaco" },
+          { "id": "b", "text": "Nauru" },
+          { "id": "c", "text": "Vatican City" },
+          { "id": "d", "text": "San Marino" }
         ],
         "answer": "c"
       },
       {
-        "id": 5,
-        "title": "Quel fruit est jaune et courbé ?",
-        "options": [
-          { "id": "a", "text": "Banane" },
-          { "id": "b", "text": "Pomme" },
-          { "id": "c", "text": "Cerise" },
-          { "id": "d", "text": "Orange" }
-        ],
-        "answer": "a"
-      },
-      {
-        "id": 6,
-        "title": "Quel animal a une trompe ?",
-        "options": [
-          { "id": "a", "text": "Éléphant" },
-          { "id": "b", "text": "Lion" },
-          { "id": "c", "text": "Singe" },
-          { "id": "d", "text": "Chien" }
-        ],
-        "answer": "a"
-      },
-      {
         "id": 7,
-        "title": "Quel est le contraire de 'grand' ?",
+        "title": "Which ocean is the largest?",
         "options": [
-          { "id": "a", "text": "Petit" },
-          { "id": "b", "text": "Moyen" },
-          { "id": "c", "text": "Long" },
-          { "id": "d", "text": "Épais" }
+          { "id": "a", "text": "Atlantic Ocean" },
+          { "id": "b", "text": "Indian Ocean" },
+          { "id": "c", "text": "Arctic Ocean" },
+          { "id": "d", "text": "Pacific Ocean" }
         ],
-        "answer": "a"
+        "answer": "d"
       },
       {
         "id": 8,
-        "title": "Combien de couleurs y a-t-il dans un arc-en-ciel ?",
+        "title": "What is the hardest natural substance on Earth?",
         "options": [
-          { "id": "a", "text": "5" },
-          { "id": "b", "text": "6" },
-          { "id": "c", "text": "7" },
-          { "id": "d", "text": "8" }
+          { "id": "a", "text": "Gold" },
+          { "id": "b", "text": "Iron" },
+          { "id": "c", "text": "Diamond" },
+          { "id": "d", "text": "Platinum" }
         ],
         "answer": "c"
       },
       {
         "id": 9,
-        "title": "Quel animal vit dans la ferme et donne du lait ?",
+        "title": "Which country is known as the Land of the Rising Sun?",
         "options": [
-          { "id": "a", "text": "Vache" },
-          { "id": "b", "text": "Poule" },
-          { "id": "c", "text": "Cheval" },
-          { "id": "d", "text": "Cochon" }
+          { "id": "a", "text": "China" },
+          { "id": "b", "text": "Japan" },
+          { "id": "c", "text": "South Korea" },
+          { "id": "d", "text": "Thailand" }
+        ],
+        "answer": "b"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-002",
+    "name": "Geography",
+    "description": "Test your knowledge of world geography.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Which country has the largest population?",
+        "options": [
+          { "id": "a", "text": "India" },
+          { "id": "b", "text": "China" },
+          { "id": "c", "text": "USA" },
+          { "id": "d", "text": "Indonesia" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 1,
+        "title": "What is the capital of Canada?",
+        "options": [
+          { "id": "a", "text": "Toronto" },
+          { "id": "b", "text": "Ottawa" },
+          { "id": "c", "text": "Vancouver" },
+          { "id": "d", "text": "Montreal" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Which desert is the largest in the world?",
+        "options": [
+          { "id": "a", "text": "Sahara" },
+          { "id": "b", "text": "Gobi" },
+          { "id": "c", "text": "Kalahari" },
+          { "id": "d", "text": "Antarctic Desert" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 3,
+        "title": "Which river is the longest in the world?",
+        "options": [
+          { "id": "a", "text": "Amazon" },
+          { "id": "b", "text": "Nile" },
+          { "id": "c", "text": "Yangtze" },
+          { "id": "d", "text": "Mississippi" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "Which country is known as the Land of the Midnight Sun?",
+        "options": [
+          { "id": "a", "text": "Sweden" },
+          { "id": "b", "text": "Norway" },
+          { "id": "c", "text": "Finland" },
+          { "id": "d", "text": "Iceland" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 5,
+        "title": "Which is the smallest country in Africa?",
+        "options": [
+          { "id": "a", "text": "Gabon" },
+          { "id": "b", "text": "Lesotho" },
+          { "id": "c", "text": "Equatorial Guinea" },
+          { "id": "d", "text": "Seychelles" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 6,
+        "title": "Which mountain is the highest in the world?",
+        "options": [
+          { "id": "a", "text": "K2" },
+          { "id": "b", "text": "Mount Everest" },
+          { "id": "c", "text": "Kangchenjunga" },
+          { "id": "d", "text": "Lhotse" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "Which country has the most official languages?",
+        "options": [
+          { "id": "a", "text": "India" },
+          { "id": "b", "text": "Switzerland" },
+          { "id": "c", "text": "South Africa" },
+          { "id": "d", "text": "Belgium" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 8,
+        "title": "Which ocean is the smallest?",
+        "options": [
+          { "id": "a", "text": "Atlantic Ocean" },
+          { "id": "b", "text": "Indian Ocean" },
+          { "id": "c", "text": "Arctic Ocean" },
+          { "id": "d", "text": "Southern Ocean" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 9,
+        "title": "Which country is the largest by land area?",
+        "options": [
+          { "id": "a", "text": "Canada" },
+          { "id": "b", "text": "Russia" },
+          { "id": "c", "text": "USA" },
+          { "id": "d", "text": "China" }
+        ],
+        "answer": "b"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-003",
+    "name": "Biology",
+    "description": "Test your knowledge of the natural world and living organisms.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "What is the powerhouse of the cell?",
+        "options": [
+          { "id": "a", "text": "Nucleus" },
+          { "id": "b", "text": "Mitochondria" },
+          { "id": "c", "text": "Ribosome" },
+          { "id": "d", "text": "Golgi apparatus" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 1,
+        "title": "Which blood cells help fight infections?",
+        "options": [
+          { "id": "a", "text": "Red blood cells" },
+          { "id": "b", "text": "White blood cells" },
+          { "id": "c", "text": "Platelets" },
+          { "id": "d", "text": "Plasma" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "What is the main gas responsible for global warming?",
+        "options": [
+          { "id": "a", "text": "Oxygen" },
+          { "id": "b", "text": "Nitrogen" },
+          { "id": "c", "text": "Carbon Dioxide" },
+          { "id": "d", "text": "Hydrogen" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "Which organ filters blood in the human body?",
+        "options": [
+          { "id": "a", "text": "Liver" },
+          { "id": "b", "text": "Kidneys" },
+          { "id": "c", "text": "Spleen" },
+          { "id": "d", "text": "Lungs" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "What is the largest organ in the human body?",
+        "options": [
+          { "id": "a", "text": "Liver" },
+          { "id": "b", "text": "Skin" },
+          { "id": "c", "text": "Lungs" },
+          { "id": "d", "text": "Heart" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 5,
+        "title": "Which macromolecule is the main source of energy for the body?",
+        "options": [
+          { "id": "a", "text": "Carbohydrates" },
+          { "id": "b", "text": "Proteins" },
+          { "id": "c", "text": "Lipids" },
+          { "id": "d", "text": "Nucleic acids" }
         ],
         "answer": "a"
+      },
+      {
+        "id": 6,
+        "title": "Which part of the brain controls balance and coordination?",
+        "options": [
+          { "id": "a", "text": "Cerebellum" },
+          { "id": "b", "text": "Cerebrum" },
+          { "id": "c", "text": "Brainstem" },
+          { "id": "d", "text": "Hypothalamus" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 7,
+        "title": "Which blood type is known as the universal donor?",
+        "options": [
+          { "id": "a", "text": "O negative" },
+          { "id": "b", "text": "AB positive" },
+          { "id": "c", "text": "A positive" },
+          { "id": "d", "text": "B negative" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 8,
+        "title": "Which process do plants use to make food?",
+        "options": [
+          { "id": "a", "text": "Respiration" },
+          { "id": "b", "text": "Photosynthesis" },
+          { "id": "c", "text": "Fermentation" },
+          { "id": "d", "text": "Transpiration" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "What is the basic unit of life?",
+        "options": [
+          { "id": "a", "text": "Atom" },
+          { "id": "b", "text": "Molecule" },
+          { "id": "c", "text": "Cell" },
+          { "id": "d", "text": "Organ" }
+        ],
+        "answer": "c"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-004",
+    "name": "Netflix",
+    "description": "Test your knowledge of popular Netflix shows and movies.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "In 'Stranger Things', what is Eleven's real name?",
+        "options": [
+          { "id": "a", "text": "Jane Hopper" },
+          { "id": "b", "text": "El" },
+          { "id": "c", "text": "Jane Ives" },
+          { "id": "d", "text": "Eleonora" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 1,
+        "title": "Which Netflix series is set in a zombie apocalypse?",
+        "options": [
+          { "id": "a", "text": "The Witcher" },
+          { "id": "b", "text": "The Umbrella Academy" },
+          { "id": "c", "text": "Kingdom" },
+          { "id": "d", "text": "Black Summer" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 2,
+        "title": "In 'The Crown', which queen is portrayed?",
+        "options": [
+          { "id": "a", "text": "Queen Victoria" },
+          { "id": "b", "text": "Queen Elizabeth II" },
+          { "id": "c", "text": "Queen Elizabeth I" },
+          { "id": "d", "text": "Queen Mary" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 3,
+        "title": "Which Netflix film won the Best Picture Oscar in 2021?",
+        "options": [
+          { "id": "a", "text": "Mank" },
+          { "id": "b", "text": "Roma" },
+          { "id": "c", "text": "The Power of the Dog" },
+          { "id": "d", "text": "No Netflix film won" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 4,
+        "title": "In 'Money Heist', what color are the jumpsuits?",
+        "options": [
+          { "id": "a", "text": "Red" },
+          { "id": "b", "text": "Green" },
+          { "id": "c", "text": "Blue" },
+          { "id": "d", "text": "Black" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 5,
+        "title": "Which actor plays Geralt in 'The Witcher'?",
+        "options": [
+          { "id": "a", "text": "Henry Cavill" },
+          { "id": "b", "text": "Tom Hardy" },
+          { "id": "c", "text": "Chris Hemsworth" },
+          { "id": "d", "text": "Jason Momoa" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 6,
+        "title": "Which animated Netflix series features a yellow family?",
+        "options": [
+          { "id": "a", "text": "Family Guy" },
+          { "id": "b", "text": "The Simpsons" },
+          { "id": "c", "text": "BoJack Horseman" },
+          { "id": "d", "text": "Rick and Morty" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "Which Netflix series is based on a book series by Lemony Snicket?",
+        "options": [
+          { "id": "a", "text": "A Series of Unfortunate Events" },
+          { "id": "b", "text": "The Haunting of Hill House" },
+          { "id": "c", "text": "Locke & Key" },
+          { "id": "d", "text": "Shadow and Bone" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 8,
+        "title": "In 'Bridgerton', which family is the story centered around?",
+        "options": [
+          { "id": "a", "text": "The Featheringtons" },
+          { "id": "b", "text": "The Bridgertons" },
+          { "id": "c", "text": "The Bassets" },
+          { "id": "d", "text": "The Sharmas" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "Which series features the character Joe Goldberg?",
+        "options": [
+          { "id": "a", "text": "You" },
+          { "id": "b", "text": "Ozark" },
+          { "id": "c", "text": "Breaking Bad" },
+          { "id": "d", "text": "The Queen's Gambit" }
+        ],
+        "answer": "a"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-005",
+    "name": "Philosophy",
+    "description": "Challenge your understanding of philosophy, thinkers, and ideas.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Who wrote 'The Republic'?",
+        "options": [
+          { "id": "a", "text": "Aristotle" },
+          { "id": "b", "text": "Plato" },
+          { "id": "c", "text": "Socrates" },
+          { "id": "d", "text": "Descartes" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 1,
+        "title": "Which philosopher is famous for the quote 'I think, therefore I am'?",
+        "options": [
+          { "id": "a", "text": "Kant" },
+          { "id": "b", "text": "Descartes" },
+          { "id": "c", "text": "Nietzsche" },
+          { "id": "d", "text": "Hume" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Existentialism is most closely associated with which thinker?",
+        "options": [
+          { "id": "a", "text": "Jean-Paul Sartre" },
+          { "id": "b", "text": "Plato" },
+          { "id": "c", "text": "Aristotle" },
+          { "id": "d", "text": "Confucius" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 3,
+        "title": "Who is considered the father of modern political philosophy?",
+        "options": [
+          { "id": "a", "text": "Thomas Hobbes" },
+          { "id": "b", "text": "John Locke" },
+          { "id": "c", "text": "Karl Marx" },
+          { "id": "d", "text": "Jean-Jacques Rousseau" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 4,
+        "title": "Which philosopher wrote 'Thus Spoke Zarathustra'?",
+        "options": [
+          { "id": "a", "text": "Friedrich Nietzsche" },
+          { "id": "b", "text": "Immanuel Kant" },
+          { "id": "c", "text": "Søren Kierkegaard" },
+          { "id": "d", "text": "Hegel" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 5,
+        "title": "Which school of thought believes knowledge comes primarily from sensory experience?",
+        "options": [
+          { "id": "a", "text": "Rationalism" },
+          { "id": "b", "text": "Empiricism" },
+          { "id": "c", "text": "Idealism" },
+          { "id": "d", "text": "Existentialism" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "Who introduced the concept of the 'categorical imperative'?",
+        "options": [
+          { "id": "a", "text": "Kant" },
+          { "id": "b", "text": "Hobbes" },
+          { "id": "c", "text": "Mill" },
+          { "id": "d", "text": "Nietzsche" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 7,
+        "title": "What does 'tabula rasa' mean in philosophy?",
+        "options": [
+          { "id": "a", "text": "Blank slate" },
+          { "id": "b", "text": "Eternal return" },
+          { "id": "c", "text": "Moral duty" },
+          { "id": "d", "text": "Divine right" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 8,
+        "title": "Who wrote 'Meditations'?",
+        "options": [
+          { "id": "a", "text": "Seneca" },
+          { "id": "b", "text": "Marcus Aurelius" },
+          { "id": "c", "text": "Epictetus" },
+          { "id": "d", "text": "Plato" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "Which philosopher is associated with 'will to power'?",
+        "options": [
+          { "id": "a", "text": "Nietzsche" },
+          { "id": "b", "text": "Hume" },
+          { "id": "c", "text": "Socrates" },
+          { "id": "d", "text": "Descartes" }
+        ],
+        "answer": "a"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-006",
+    "name": "Sharks",
+    "description": "Test your knowledge of shark species, behavior, and biology.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Which species is known as the largest shark?",
+        "options": [
+          { "id": "a", "text": "Great White Shark" },
+          { "id": "b", "text": "Tiger Shark" },
+          { "id": "c", "text": "Whale Shark" },
+          { "id": "d", "text": "Hammerhead Shark" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 1,
+        "title": "Which sense is especially well-developed in sharks?",
+        "options": [
+          { "id": "a", "text": "Hearing" },
+          { "id": "b", "text": "Smell" },
+          { "id": "c", "text": "Taste" },
+          { "id": "d", "text": "Sight" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "What is the term for sharks giving birth to live young?",
+        "options": [
+          { "id": "a", "text": "Oviparous" },
+          { "id": "b", "text": "Viviparous" },
+          { "id": "c", "text": "Ovoviviparous" },
+          { "id": "d", "text": "Metamorphic" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "Which shark species is considered the fastest swimmer?",
+        "options": [
+          { "id": "a", "text": "Mako Shark" },
+          { "id": "b", "text": "Great White Shark" },
+          { "id": "c", "text": "Bull Shark" },
+          { "id": "d", "text": "Hammerhead Shark" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 4,
+        "title": "Which sense allows sharks to detect electrical fields?",
+        "options": [
+          { "id": "a", "text": "Electroreception" },
+          { "id": "b", "text": "Echolocation" },
+          { "id": "c", "text": "Magnetoreception" },
+          { "id": "d", "text": "Thermoreception" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 5,
+        "title": "Which shark is known for its distinctive hammer-shaped head?",
+        "options": [
+          { "id": "a", "text": "Tiger Shark" },
+          { "id": "b", "text": "Hammerhead Shark" },
+          { "id": "c", "text": "Great White Shark" },
+          { "id": "d", "text": "Goblin Shark" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "What is the main diet of a Whale Shark?",
+        "options": [
+          { "id": "a", "text": "Large fish" },
+          { "id": "b", "text": "Plankton" },
+          { "id": "c", "text": "Seals" },
+          { "id": "d", "text": "Squid" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "Which shark can survive in both freshwater and saltwater?",
+        "options": [
+          { "id": "a", "text": "Bull Shark" },
+          { "id": "b", "text": "Tiger Shark" },
+          { "id": "c", "text": "Great White Shark" },
+          { "id": "d", "text": "Blue Shark" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 8,
+        "title": "What type of skeleton do sharks have?",
+        "options": [
+          { "id": "a", "text": "Bone" },
+          { "id": "b", "text": "Cartilage" },
+          { "id": "c", "text": "Mixed bone and cartilage" },
+          { "id": "d", "text": "Exoskeleton" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "Which species is known for the largest recorded shark bite?",
+        "options": [
+          { "id": "a", "text": "Great White Shark" },
+          { "id": "b", "text": "Tiger Shark" },
+          { "id": "c", "text": "Megalodon" },
+          { "id": "d", "text": "Bull Shark" }
+        ],
+        "answer": "c"
       }
     ]
   }
