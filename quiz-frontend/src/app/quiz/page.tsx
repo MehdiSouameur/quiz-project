@@ -41,7 +41,7 @@ export default function Quiz() {
   const [showResults, setShowResults] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(100); // percentage
-  const totalTime = 10; // seconds
+  const totalTime = 60; // seconds
   const progressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const finishTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const nextQuestionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -194,10 +194,13 @@ export default function Quiz() {
 
   return (
     <main className="flex h-[100vh] justify-center items-center">
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col items-center w-full max-w-xl">
 
         <div className="flex flex-col">
-          <h1 className="text-3xl pb-5 font-bold text-center"> {quizData.question.title}</h1>
+          <h1   className="
+            text-3xl font-bold text-center break-words 
+            leading-snug h-[6rem] flex items-center justify-center
+          "> {quizData.question.title}</h1>
         </div>
 
         <div>

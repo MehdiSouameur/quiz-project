@@ -700,5 +700,123 @@
         "answer": "c"
       }
     ]
+  },
+  {
+    "quizId": "quiz-007",
+    "name": "Propagation des Ondes",
+    "description": "Testez vos connaissances sur la propagation des ondes en physique (niveau lycée).",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Quelle est la vitesse de propagation des ondes sonores dans l'air à 20°C ?",
+        "options": [
+          { "id": "a", "text": "340 m/s" },
+          { "id": "b", "text": "300 000 km/s" },
+          { "id": "c", "text": "1500 m/s" },
+          { "id": "d", "text": "1 m/s" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 1,
+        "title": "Une onde a une fréquence de 500 Hz et se propage à 340 m/s. Quelle est sa longueur d'onde ?",
+        "options": [
+          { "id": "a", "text": "0,68 m" },
+          { "id": "b", "text": "1,5 m" },
+          { "id": "c", "text": "170 m" },
+          { "id": "d", "text": "0,34 m" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 2,
+        "title": "Les ondes lumineuses sont de quel type ?",
+        "options": [
+          { "id": "a", "text": "Mécaniques" },
+          { "id": "b", "text": "Électromagnétiques" },
+          { "id": "c", "text": "Sismiques" },
+          { "id": "d", "text": "Acoustiques" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 3,
+        "title": "Quelle grandeur représente l'amplitude d'une onde ?",
+        "options": [
+          { "id": "a", "text": "La distance entre deux crêtes" },
+          { "id": "b", "text": "La vitesse de propagation" },
+          { "id": "c", "text": "La hauteur maximale de l'onde" },
+          { "id": "d", "text": "La fréquence" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 4,
+        "title": "Une onde a une longueur d'onde de 0,5 m et une vitesse de 340 m/s. Quelle est sa fréquence ?",
+        "options": [
+          { "id": "a", "text": "170 Hz" },
+          { "id": "b", "text": "680 Hz" },
+          { "id": "c", "text": "340 Hz" },
+          { "id": "d", "text": "500 Hz" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 5,
+        "title": "Les ondes sonores sont transmises par quel type de milieu ?",
+        "options": [
+          { "id": "a", "text": "Vide" },
+          { "id": "b", "text": "Matière (solide, liquide, gaz)" },
+          { "id": "c", "text": "Rayonnement électromagnétique" },
+          { "id": "d", "text": "Aucun" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "Lorsqu'une onde rencontre un obstacle et change de direction, on parle de :",
+        "options": [
+          { "id": "a", "text": "Réflexion" },
+          { "id": "b", "text": "Diffraction" },
+          { "id": "c", "text": "Interférence" },
+          { "id": "d", "text": "Réfraction" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "Une onde sonore met 2 s pour parcourir 680 m. Quelle est sa vitesse ?",
+        "options": [
+          { "id": "a", "text": "340 m/s" },
+          { "id": "b", "text": "1360 m/s" },
+          { "id": "c", "text": "170 m/s" },
+          { "id": "d", "text": "680 m/s" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 8,
+        "title": "Comment s'appelle la distance entre deux crêtes successives ?",
+        "options": [
+          { "id": "a", "text": "Longueur d'onde" },
+          { "id": "b", "text": "Amplitude" },
+          { "id": "c", "text": "Fréquence" },
+          { "id": "d", "text": "Période" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 9,
+        "title": "La fréquence d'une onde sonore influence :",
+        "options": [
+          { "id": "a", "text": "Le volume" },
+          { "id": "b", "text": "La hauteur (tonalité)" },
+          { "id": "c", "text": "La vitesse" },
+          { "id": "d", "text": "La longueur d'onde uniquement" }
+        ],
+        "answer": "b"
+      }
+    ]
   }
+
 ]
