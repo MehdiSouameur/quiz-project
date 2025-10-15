@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   const StartQuiz = (id: string) => {
-    router.push(`/quiz?id=${id}`);
+    router.push(`/quiz/${id}/mode`);
   };
 
   return (

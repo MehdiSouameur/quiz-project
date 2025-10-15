@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react";
-import QuizButton from "../components/QuizButton";
+import QuizButton from "../../../components/QuizButton";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import SubmitButton from "../components/SubmitButton";
+import { useRouter, useParams } from "next/navigation";
+import SubmitButton from "../../../components/SubmitButton";
 
 interface Option {
   id: string | number;
@@ -46,13 +46,15 @@ export default function Quiz() {
   const finishTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const nextQuestionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const quizId = useSearchParams().get("id") ?? "default-id";
+  const { id } = useParams();
+  const quizId = id as string;
 
   const startQuiz = async () => {
     console.log("starting quiz");
     const res = await fetch("http://localhost:3001/api/quiz/start/" + quizId);
     const data = await res.json();
     setQuizData(data);
+    router.push(`/quiz/${quizId}/offline?gameId=${data.gameId}`);
   };
 
   // Start Quiz
@@ -169,7 +171,7 @@ export default function Quiz() {
         };
       });
     } else {
-      router.push("/"); // game finished
+      router.push(`/quiz/${id}/offline/result?gameId=${data.gameId}`); // game finished
     }
   };
 
@@ -215,7 +217,7 @@ export default function Quiz() {
             {correctAnswer === selectedAnswer ? "Correct answer!" : "Wrong answer!"}
           </h1>
         </div>
-
+ 
         <div className="w-full h-3 bg-gray-300 rounded overflow-hidden mb-4">
           <div
             id="progress-bar"

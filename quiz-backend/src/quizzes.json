@@ -817,6 +817,34 @@
         "answer": "b"
       }
     ]
+  },
+  {
+    "quizId": "quiz-010",
+    "name": "General Knowledge",
+    "description": "A diverse quiz testing your knowledge on various topics.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "What is the capital of France?",
+        "options": [
+          { "id": "a", "text": "Berlin" },
+          { "id": "b", "text": "Madrid" },
+          { "id": "c", "text": "Paris" },
+          { "id": "d", "text": "Rome" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 1,
+        "title": "Who wrote '1984'?",
+        "options": [
+          { "id": "a", "text": "George Orwell" },
+          { "id": "b", "text": "Aldous Huxley" },
+          { "id": "c", "text": "J.K. Rowling" },
+          { "id": "d", "text": "Ernest Hemingway" }
+        ],
+        "answer": "a"
+      }
+    ]
   }
-
 ]
