@@ -32,7 +32,7 @@ router.post("/register", (req: Request, res: Response) =>  {
 
     // Optionally, set as cookie
     res.cookie("token", newToken, {
-        httpOnly: true,
+        httpOnly: false,
         sameSite: "lax", // adjust for your frontend
         secure: false, 
     });

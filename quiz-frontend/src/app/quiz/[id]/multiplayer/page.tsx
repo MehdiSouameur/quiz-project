@@ -1,14 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useEffect, useState, useRef } from "react";
+import { io, Socket} from "socket.io-client";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Lobby() {
     const [username, setUsername] = useState("");
     const [quizName, setQuizName] = useState<string | null>(null);
     const [opponent, setOpponent] = useState<string | null>(null);
     const [gameId, setGameId] = useState<string | null>(null);
+    const [playerReady, setPlayerReady] = useState<boolean>(false);
+    const [opponentReady, setOpponentReady] = useState<boolean>(false);
+    const [countdown, setCountdown] = useState<number | null>(null);
+    const socketRef = useRef<Socket | null>(null);
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -43,11 +48,15 @@ export default function Lobby() {
         // Get auth token
         let token = document.cookie
         .split("; ")
-        .find((row) => row.startsWith("authToken="))
+        .find((row) => row.startsWith("token="))
         ?.split("=")[1];
+
+        console.log("Name is: " + name);
+        console.log("Token is: " + token);
 
         if (!token || !name) {
             // wrap async call in an IIFE since useEffect cannot be async
+            console.log("NO token, registering user");
             (async () => {
             await register();
             // reset name and token since they are null now
@@ -58,31 +67,33 @@ export default function Lobby() {
             setUsername(name);
             token = document.cookie
                 .split("; ")
-                .find((row) => row.startsWith("authToken="))
+                .find((row) => row.startsWith("token="))
                 ?.split("=")[1];
             })();
         }
 
-        const roomParam = searchParams.get("room"); // get room id from query string if present
-
         const socket = io("http://localhost:3001");
+        socketRef.current = socket;
 
 
-        socket.on("game_information", ({curQuiz, curGame}) => {
+        socket.on("game_information", ({curQuiz, curGame, curGameId}) => {
             console.log("Received game and quiz information: ")
             console.log(curQuiz)
             setQuizName(curQuiz.name)
+            setGameId(curGameId)
+            console.log("CUrrent game id: " + curGameId);
             console.log(quizName)
         });
+
+        const params = new URLSearchParams(window.location.search);
+        const roomParam = params.get("room");
 
         socket.on("connect", () => {
             console.log("Connected to socket:", socket.id);
 
-            const payload = { playerName: name, playerToken: token };
-
             if (roomParam) {
                 console.log("Joining room:", roomParam);
-                socket.emit("join_room", { roomId: roomParam, ...payload });
+                socket.emit("join_room", { roomId: roomParam, playerName: name, playerToken: token });
             } else {
                 console.log("Creating new room...");
                 socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
@@ -103,8 +114,13 @@ export default function Lobby() {
                 console.log("Received game and quiz information: ")
                 console.log(data.curQuiz)
                 setQuizName(data.curQuiz.name)
+                setGameId(data.curGameId);
                 console.log(quizName)
             });
+
+            // And join the new room
+            console.log("Joining room: roomid: " + gameId + " name: " + name + " token: " + token )
+            socket.emit("join_room", { roomId: gameId, playerName: name, playerToken: token  });
         });
 
         socket.on("room_joined", ({ players }) => {
@@ -112,10 +128,12 @@ export default function Lobby() {
 
             // ✅ Now request info
             socket.emit("information", (data: any) => {
-                console.log("Received game and quiz information: ")
-                console.log(data.curQuiz)
-                setQuizName(data.curQuiz.name)
-                console.log(quizName)
+                console.log("Received game and quiz information: ");
+                console.log(data.curQuiz);
+                setQuizName(data.curQuiz.name);
+                setGameId(data.curGameId);
+                console.log("Current game id:  " + data.curGameId);
+                console.log(quizName);
             });
         });
 
@@ -141,6 +159,32 @@ export default function Lobby() {
             setOpponent(null)
         });
 
+        type ReadyClientPayload = { state: boolean}
+        socket.on("readyClient", ({ state }: ReadyClientPayload) => {
+            console.log("Server -> Player is ready: " + state)
+            setPlayerReady(state)
+        });
+
+        socket.on("readyOpponent", ({ state }: ReadyClientPayload) => {
+            console.log("Server -> Opponent is ready: " + state)
+            setOpponentReady(state)
+        });
+
+        type CountdownType = { countdown: number}
+        socket.on("countdown_tick", ({ countdown }: CountdownType) => {
+            console.log("Commencing countdown: " + countdown)
+            setCountdown(countdown);
+        })
+
+        socket.on("countdown_cancelled", () => {
+            setCountdown(null);
+        });
+
+        socket.on("game_start", () => {
+            setCountdown(null);
+            console.log("Game started!");
+        });
+
         socket.on("disconnect", () => {
             console.log("Socket disconnected");
         });
@@ -150,25 +194,101 @@ export default function Lobby() {
         };
     }, [router]);
 
+
+    function readyUp() {
+        
+        // Update ready state in the backend
+        const socket = socketRef.current // Socket | Null
+        if(!socket) return;
+
+        console.log("Sending request to server to change player state...")
+        type ReadystatePayload = { roomId: string; playerSocket: string; state: boolean };
+        socket.emit("readyState", { roomId: gameId, playerSocket: socket.id, state: !playerReady,} as ReadystatePayload);
+
+    }
+
+    
+
     return (
         <main className="flex flex-col h-[100vh] justify-center items-center">
-        <h1 className="text-white text-center font-black text-3xl mb-12">
-            Game lobby<br></br>{quizName} Quiz
-        </h1>
-        <div className="flex items-center justify-center rounded-xl p-4 text-white w-[60%]">
-            <div className="flex-1 text-left text-3xl font-black">
-            {username}
-            </div>
-            <div className="px-20 text-5xl font-semibold text-amber-500">vs</div>
-            <div className="flex-1 text-right text-3xl font-bold">
+            <h1 className="text-white text-center font-black text-3xl mb-12">
+                Game lobby<br />
+                {quizName} Quiz
+            </h1>
+
+            <div className="grid grid-cols-3 items-center justify-items-center rounded-xl p-4 text-white w-[60%] gap-y-2">
+                {/* Row 1 — names */}
+                <div className="text-3xl font-bold text-center">{username}</div>
+                <div className="text-5xl font-semibold text-amber-500">VS</div>
+                <div className="text-3xl font-bold text-center">
                 {opponent ? opponent : "Waiting for opponent..."}
+                </div>
+
+                {/* Row 2 — icons */}
+                <div>
+                <Image
+                    src={playerReady ? "/GreenTick.svg" : "/RedX.svg"}
+                    alt={playerReady ? "Ready" : "Not Ready"}
+                    width={40}
+                    height={40}
+                    className={`${opponent ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+                />
+                </div>
+
+                <div /> {/* empty middle cell */}
+
+                <div>
+                <Image
+                    src={opponentReady ? "/GreenTick.svg" : "/RedX.svg"}
+                    alt={opponentReady ? "Ready" : "Not Ready"}
+                    width={40}
+                    height={40}
+                    className={`${opponent ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
+                />
+                </div>
             </div>
-        </div>
-        {gameId && (
-            <p className="text-gray-400 mt-6">
-            Room ID: <span className="font-mono">{gameId}</span>
-            </p>
-        )}
+
+            <div>
+                {/* Always render the room ID container */}
+                <p
+                className={`text-gray-400 mt-6 transition-opacity duration-300 ${
+                    gameId ? "opacity-100" : "opacity-0"
+                }`}
+                >
+                Room ID: <span className="font-mono">{gameId || "••••••••"}</span>
+                </p>
+            </div>
+
+            <div className="mt-10">
+                {/* Always render the button placeholder */}
+                <button
+                onClick={readyUp}
+                disabled={!opponent}
+                className={`flex items-center justify-center p-2 rounded-xl text-white font-bold transition-colors cursor-pointer
+                    ${
+                    playerReady
+                        ? "bg-red-600 hover:bg-red-700"
+                        : "bg-lime-600 hover:bg-lime-700"
+                    }
+                    ${opponent ? "opacity-100" : "opacity-0 pointer-events-none"} 
+                `}
+                >
+                {playerReady ? "Unready" : "Ready up"}
+                </button>
+            </div>
+
+            <div className="text-xl py-12 font-bold flex flex-col items-center">
+                Game starting in:
+                <div
+                    className={`text-6xl font-black transition-all duration-300 ${
+                    countdown !== null ? "opacity-100 scale-100" : "opacity-0 scale-50"
+                    }`}
+                >
+                    {countdown !== null ? countdown : ""}
+                </div>
+            </div>
+
         </main>
+
     );
 }
