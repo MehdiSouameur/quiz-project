@@ -5,6 +5,7 @@ import { io, Socket} from "socket.io-client";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useSocket, } from "@/app/context/SocketContext";
 import Image from "next/image";
+import Quiz from "../offline/page";
 
 interface Option {
   id: string;
@@ -59,13 +60,26 @@ export default function Lobby() {
 
 
     const { socket, isConnecting } = useSocket();
-    
+
+
+
+    function readyUp() {
+
+        if(!socket) return;
+        console.log("Sending request to server to change player state...")
+        type ReadystatePayload = { roomId: string; playerSocket: string; state: boolean };
+        socket.emit("readyState", { roomId: gameId, playerSocket: socket.id, state: !playerReady,} as ReadystatePayload);
+
+    }
+
     useEffect(() => {
+        // Wait for connection to be established in layout
         if (isConnecting || !socket) {
             console.log("socket is null mate")
             return;
         }
-        console.log("OK we running useeffect now");
+        console.log("Connection established, setting up lobby")
+
         // get username from cookie
         let name = document.cookie
             .split("; ")
@@ -84,7 +98,7 @@ export default function Lobby() {
 
         if (!token || !name) {
             // wrap async call in an IIFE since useEffect cannot be async
-            console.log("NO token or name, registering user");
+            console.log("No token or name, registering user");
             (async () => {
             await register();
             // reset name and token since they are null now
@@ -100,20 +114,10 @@ export default function Lobby() {
             })();
         }
 
-        socketRef.current = socket;
 
-        socket.on("game_information", ({curQuiz, curGame, curGameId}) => {
-            console.log("Received game and quiz information: ")
-            console.log(curQuiz)
-            setQuizName(curQuiz.name)
-            setGameId(curGameId)
-            console.log("CUrrent game id: " + curGameId);
-            console.log(quizName)
-        });
-        
-
+        // Check if we're trying to join an existing room from url, otherwise create a room
         const params = new URLSearchParams(window.location.search);
-        const roomParam = params.get("room");
+        let roomParam = params.get("room");
 
         if (roomParam) {
             console.log("Joining room:", roomParam);
@@ -123,64 +127,46 @@ export default function Lobby() {
             socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
         }
 
-        // When room is successfully created or joined
         socket.on("room_created", ({ _roomId }) => {
-            console.log("Room created:", _roomId);
-            setGameId(_roomId);
-
+            roomParam = _roomId;
+            console.log("Room sent from backend:", _roomId);
+            console.log("Adding query string room=" + _roomId);
             const { origin, pathname } = window.location;
             const newUrl = `${origin}${pathname}?room=${_roomId}`;
             window.history.replaceState(null, "", newUrl);
 
-            // ✅ Now request info
-            socket.emit("information", {roomId: _roomId});
-
             // And join the new room
+
             console.log("Joining room: roomid: " + _roomId + " name: " + name + " token: " + token )
             socket.emit("join_room", { roomId: _roomId, playerName: name, playerToken: token  });
+
         });
 
+        socket.on("information_response", ({ quizData }) => {
+            console.log("Quiz received: ");
+            console.log(quizData)
+            setQuizName(quizData.name)
+        })
 
-        socket.on("information_response", (quizData: Quiz) => {
-                console.log("Received game and quiz information: ")
-                console.log(quizData)
-                setQuizName(quizData.name)
-        });
-        
         socket.on("room_joined", ({ players }) => {
             console.log("Joined room with players:", players);
-
-            // ✅ Now request info
-            socket.emit("information", (data: any) => {
-                console.log("Received game and quiz information: ");
-                console.log(data.curQuiz);
-                setQuizName(data.curQuiz.name);
-                setGameId(data.curGameId);
-                console.log("Current game id:  " + data.curGameId);
-                console.log(quizName);
-            });
+            if(players.length > 0)
+                setOpponent(players[0].name)
+            if(roomParam){
+                console.log("Requesting information about room")
+                socket.emit("get_information", { _roomId: roomParam });
+                setGameId(roomParam);
+            } else {
+                console.log("No room ID found, Creating new room...");
+                socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
+            }
+            
         });
 
-        
         socket.on("player_joined", ({opponentName}) => {
             console.log("Player " + opponentName + " joined the room")
             if(opponentName != name)
                 setOpponent(opponentName);
-        });
-
-                
-        socket.on("room_joined", ({players}) => {
-            console.log("Joined room " + gameId)
-            //console.log("Opponent name: " + opponentName);
-            //setOpponent(opponentName);
-            console.log(players);
-            if(players.length > 0)
-                setOpponent(players[0].name)
-        });
-
-        socket.on("opponent_left", ({ opponent }) => {
-            console.log(opponent + " left the lobby")
-            setOpponent(null)
         });
 
         type ReadyClientPayload = { state: boolean}
@@ -194,46 +180,10 @@ export default function Lobby() {
             setOpponentReady(state)
         });
 
-        type CountdownType = { countdown: number}
-        socket.on("countdown_tick", ({ countdown }: CountdownType) => {
-            console.log("Commencing countdown: " + countdown)
-            setCountdown(countdown);
-        })
-
-        socket.on("countdown_cancelled", () => {
-            setCountdown(null);
-        });
-
-        type GameStartType = {roomId: string}
-        socket.on("game_start", ({ roomId }) => {
-            setCountdown(null);
-            console.log("Game started!");
-            router.push(`/quiz/quiz-010/multiplayer/play?room=${roomId}`)
-        });
-
-        socket.on("disconnect", () => {
-            console.log("Socket disconnected");
-        });
-
         return () => {
 
         };
-    }, [router, isConnecting, socket]);
-
-
-    function readyUp() {
-        
-        // Update ready state in the backend
-        const socket = socketRef.current // Socket | Null
-        if(!socket) return;
-
-        console.log("Sending request to server to change player state...")
-        type ReadystatePayload = { roomId: string; playerSocket: string; state: boolean };
-        socket.emit("readyState", { roomId: gameId, playerSocket: socket.id, state: !playerReady,} as ReadystatePayload);
-
-    }
-
-    
+    }, [isConnecting, router, socket]);    
 
     return (
         <main className="flex flex-col h-[100vh] justify-center items-center">

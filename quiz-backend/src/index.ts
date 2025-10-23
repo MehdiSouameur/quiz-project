@@ -7,6 +7,7 @@ import quizRoutes from "./routes/quiz.js";
 import authRoutes from "./routes/auth.js";
 import setupMultiplayerSockets from "./sockets/multiplayer.js";
 import cookieParser from "cookie-parser";
+import setupMultiplayerSockets_V2 from "./sockets/multiplayer_V2.js";
 
 const app = express();
 app.use(cors({
@@ -33,7 +34,7 @@ const io = new Server(server, {
 
 
 // WebSocket logic
-setupMultiplayerSockets(io);
+setupMultiplayerSockets_V2(io);
 
 // Start server
 server.listen(3001, () => console.log("Quiz backend with WebSocket running on port 3001"));

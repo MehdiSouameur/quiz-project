@@ -16,7 +16,7 @@ export default function Mode() {
                 Offline
             </Link>
             <Link
-                href={`/quiz/${id}/multiplayer`}
+                href={`/quiz/${id}/multiplayerV2`}
                 className="flex items-center justify-center p-2 rounded-xl bg-lime-600 text-white font-bold hover:bg-lime-800 transition-colors"
             >
                 Multiplayer

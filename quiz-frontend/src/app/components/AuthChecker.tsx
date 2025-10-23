@@ -8,9 +8,9 @@ export default function AuthChecker({ children }: { children: React.ReactNode })
   const pathname = usePathname();
 
   useEffect(() => {
-
+    console.log("Authenticating");
     // Exclude /login and any /quiz/:id/multiplayer route
-    if (pathname === "/login" || /^\/quiz\/[^/]+\/multiplayer$/.test(pathname)) return;
+    if (pathname === "/login" || /^\/quiz\/[^/]+\/multiplayer$/.test(pathname) || /^\/quiz\/[^/]+\/multiplayerV2$/.test(pathname) ) return;
 
 
     const checkAuth = async () => {
