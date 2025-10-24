@@ -7,5 +7,5 @@ export default function MultiplayerLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <SocketProvider>{children}</SocketProvider>;
+  return {children};
 }

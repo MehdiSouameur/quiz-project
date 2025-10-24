@@ -1,16 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { io, Socket} from "socket.io-client";
 import QuizButton from "@/app/components/QuizButton";
 import SubmitButton from "@/app/components/SubmitButton";
 
-export default function Play() {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+function getCookie(name: string): string | null {
+    return (
+        document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(name + "="))
+        ?.split("=")[1] || null
+    );
+}
 
+export default function Play() {
+  /* Socket handling */ 
+  const socketRef = useRef<Socket | null>(null);
+  const initialized = useRef(false);
+
+  useEffect(() => {
+      if (initialized.current) return; // skip if already run
+      initialized.current = true;
+      const init = async () => {
+          const token = getCookie("token");
+          const name = getCookie("username");
+          const params = new URLSearchParams(window.location.search);
+          let gameParam = params.get("game");
+
+          // ERROR CHECKING
+          if(!token){
+            console.log("Error: token is null");
+            return;
+          } else if(!name) {
+            console.log("Error: name is null")
+          } else if(!gameParam){
+            console.log("Error: no game id in parameters")
+          }
+
+          const socket = io("http://localhost:3001/play", {
+              auth: { token: token },
+          });
+
+          console.log("Joining Game: " + gameParam)
+          socket.emit("join_game", {_gameId: gameParam, _playerName: name, _playerToken: token})
+
+          socket.on("game_joined", () => {
+            console.log("Server response: Game joined!")
+          })
+
+
+          socket.on("game_cancelled", () => {
+            console.log("Game cancelled by server")
+          })
+    }
+
+      init();
+  },[])
+
+
+  /* Quiz front handling */
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const selectAnswer = (answer: string) => {
     setSelectedAnswer(answer);
   };
-
   const getButtonState = (optionLetter: string): "default" | "selected" => {
     return selectedAnswer === optionLetter ? "selected" : "default";
   };

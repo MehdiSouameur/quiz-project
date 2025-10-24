@@ -3,9 +3,8 @@
 import { useEffect, useState, useRef } from "react";
 import { io, Socket} from "socket.io-client";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useSocket, } from "@/app/context/SocketContext";
 import Image from "next/image";
-import Quiz from "../offline/page";
+import Quiz from "../../offline/page";
 
 interface Option {
   id: string;
@@ -59,12 +58,16 @@ export default function Lobby() {
     }
 
 
-    const { socket, isConnecting } = useSocket();
-
-
-
+    function getCookie(name: string): string | null {
+        return (
+            document.cookie
+            .split("; ")
+            .find((row) => row.startsWith(name + "="))
+            ?.split("=")[1] || null
+        );
+    }
     function readyUp() {
-
+        const socket = socketRef.current;
         if(!socket) return;
         console.log("Sending request to server to change player state...")
         type ReadystatePayload = { roomId: string; playerSocket: string; state: boolean };
@@ -73,117 +76,131 @@ export default function Lobby() {
     }
 
     useEffect(() => {
-        // Wait for connection to be established in layout
-        if (isConnecting || !socket) {
-            console.log("socket is null mate")
-            return;
-        }
-        console.log("Connection established, setting up lobby")
+        const init = async () => {
+            let name = getCookie("username");
+            let token = getCookie("token");
 
-        // get username from cookie
-        let name = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("username="))
-            ?.split("=")[1] ?? "";
-        setUsername(name);
-
-        // Get auth token
-        let token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
-
-        console.log("Name is: " + name);
-        console.log("Token is: " + token);
-
-        if (!token || !name) {
-            // wrap async call in an IIFE since useEffect cannot be async
-            console.log("No token or name, registering user");
-            (async () => {
-            await register();
-            // reset name and token since they are null now
-            name = document.cookie
-                .split("; ")
-                .find((row) => row.startsWith("username="))
-                ?.split("=")[1] ?? "";
-            setUsername(name);
-            token = document.cookie
-                .split("; ")
-                .find((row) => row.startsWith("token="))
-                ?.split("=")[1];
-            })();
-        }
-
-
-        // Check if we're trying to join an existing room from url, otherwise create a room
-        const params = new URLSearchParams(window.location.search);
-        let roomParam = params.get("room");
-
-        if (roomParam) {
-            console.log("Joining room:", roomParam);
-            socket.emit("join_room", { roomId: roomParam, playerName: name, playerToken: token });
-        } else {
-            console.log("Creating new room...");
-            socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
-        }
-
-        socket.on("room_created", ({ _roomId }) => {
-            roomParam = _roomId;
-            console.log("Room sent from backend:", _roomId);
-            console.log("Adding query string room=" + _roomId);
-            const { origin, pathname } = window.location;
-            const newUrl = `${origin}${pathname}?room=${_roomId}`;
-            window.history.replaceState(null, "", newUrl);
-
-            // And join the new room
-
-            console.log("Joining room: roomid: " + _roomId + " name: " + name + " token: " + token )
-            socket.emit("join_room", { roomId: _roomId, playerName: name, playerToken: token  });
-
-        });
-
-        socket.on("information_response", ({ quizData }) => {
-            console.log("Quiz received: ");
-            console.log(quizData)
-            setQuizName(quizData.name)
-        })
-
-        socket.on("room_joined", ({ players }) => {
-            console.log("Joined room with players:", players);
-            if(players.length > 0)
-                setOpponent(players[0].name)
-            if(roomParam){
-                console.log("Requesting information about room")
-                socket.emit("get_information", { _roomId: roomParam });
-                setGameId(roomParam);
-            } else {
-                console.log("No room ID found, Creating new room...");
-                socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
+            if (!name || !token) {
+                console.log("No username/token found, registering user...");
+                await register();
+                name = getCookie("username");
+                token = getCookie("token");
             }
-            
-        });
 
-        socket.on("player_joined", ({opponentName}) => {
-            console.log("Player " + opponentName + " joined the room")
-            if(opponentName != name)
-                setOpponent(opponentName);
-        });
+            setUsername(name ?? "");
+            console.log("Username read: " + name)
+            const params = new URLSearchParams(window.location.search);
+            let roomParam = params.get("room");
+            const socket = io("http://localhost:3001/lobby", {
+                auth: { token: token },
+            });
+            socketRef.current = socket;
 
-        type ReadyClientPayload = { state: boolean}
-        socket.on("readyClient", ({ state }: ReadyClientPayload) => {
-            console.log("Server -> Player is ready: " + state)
-            setPlayerReady(state)
-        });
+            socket.on("connect", () => {
+                console.log("✅ Connected to lobby:", socket.id);
+                // Check if we're trying to join an existing room from url, otherwise create a room
 
-        socket.on("readyOpponent", ({ state }: ReadyClientPayload) => {
-            console.log("Server -> Opponent is ready: " + state)
-            setOpponentReady(state)
-        });
+                if (roomParam) {
+                    console.log("Joining room:", roomParam);
+                    socket.emit("join_room", { roomId: roomParam, playerName:  name, playerToken: token });
+                } else {
+                    console.log("Creating new room...");
+                    socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
+                }
+            });
 
+            socket.on("room_created", ({ _roomId }) => {
+                roomParam = _roomId;
+                console.log("Room sent from backend:", _roomId);
+                console.log("Adding query string room=" + _roomId);
+                const { origin, pathname } = window.location;
+                const newUrl = `${origin}${pathname}?room=${_roomId}`;
+                window.history.replaceState(null, "", newUrl);
+
+                // And join the new room
+
+                console.log("Joining room: roomid: " + _roomId + " name: " + name + " token: " + token )
+                socket.emit("join_room", { roomId: _roomId, playerName: name, playerToken: token  });
+
+            });
+
+            socket.on("information_response", ({ quizData }) => {
+                console.log("Quiz received: ");
+                console.log(quizData)
+                setQuizName(quizData.name)
+            })
+
+            socket.on("room_joined", ({ players }) => {
+                console.log("Joined room with players:", players);
+                if(players.length > 0)
+                    setOpponent(players[0].name)
+                if(roomParam){
+                    console.log("Requesting information about room")
+                    socket.emit("get_information", { _roomId: roomParam });
+                    setGameId(roomParam);
+                } else {
+                    console.log("No room ID found, Creating new room...");
+                    socket.emit("create_room", {playerName: name, playerToken: token, quizId: quizId});
+                }
+                
+            });
+
+            socket.on("player_joined", ({ opponentName }) => {
+                console.log("Player " + opponentName + " joined the room")
+                if(opponentName != name)
+                    setOpponent(opponentName);
+            });
+
+            socket.on("opponent_left", ({ opponent }) => {
+                console.log(opponent + " left the lobby")
+                setOpponent(null);
+                setOpponentReady(false);
+                type ReadystatePayload = { roomId: string; playerSocket: string; state: boolean };
+                socket.emit("readyState", { roomId: roomParam, playerSocket: socket.id, state: false} as ReadystatePayload);
+            });
+
+            type ReadyClientPayload = { state: boolean}
+            socket.on("readyClient", ({ state }: ReadyClientPayload) => {
+                console.log("Server -> Player is ready: " + state)
+                setPlayerReady(state)
+            });
+
+            socket.on("readyOpponent", ({ state }: ReadyClientPayload) => {
+                console.log("Server -> Opponent is ready: " + state)
+                setOpponentReady(state)
+            });
+
+            type CountdownType = { countdown: number}
+            socket.on("countdown_tick", ({ countdown }: CountdownType) => {
+                console.log("Commencing countdown: " + countdown)
+                setCountdown(countdown);
+            })
+
+            socket.on("countdown_cancelled", () => {
+                setCountdown(null);
+
+            });
+
+            type GameStartType = {roomId: string}
+            socket.on("game_start", ({ roomId }: GameStartType) => {
+                setCountdown(null);
+                console.log("Game started!");
+
+                if (socket.connected) {
+                    socket.disconnect();
+                    console.log("🔌 Disconnected from lobby namespace");
+                }
+                router.push(`/quiz/quiz-010/multiplayerV2/play?game=${roomId}`)
+            });
+
+        }
+
+        init();
+    
         return () => {
 
         };
-    }, [isConnecting, router, socket]);    
+    }, [router]);    
 
     return (
         <main className="flex flex-col h-[100vh] justify-center items-center">
