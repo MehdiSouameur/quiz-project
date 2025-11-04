@@ -24,6 +24,7 @@ router.get("/check", (req: Request, res: Response) => {
 
 // Register a new token
 router.post("/register", (req: Request, res: Response) =>  {
+    console.log("Register request received");
     const newToken = generateAuth();
     validTokens.push(newToken);
 

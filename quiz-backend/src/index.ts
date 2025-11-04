@@ -13,8 +13,8 @@ import setupLobbyServer from "./sockets/lobby.js";
 
 const app = express();
 app.use(cors({
-  origin: "http://localhost:3000", // must match your frontend exactly
-  credentials: true,               // allow cookies
+  origin: true,
+  credentials: true,       
 }));
 app.use(cookieParser());
 
@@ -28,7 +28,7 @@ app.use("/api/auth", authRoutes)
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: true,
     methods: ["GET", "POST"],
     credentials: true,               
   },

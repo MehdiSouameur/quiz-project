@@ -9,6 +9,7 @@ interface Player {
     token: string;
     score: number;
     answers: { questionId: number; selected: string; correct: boolean }[];
+    isReady: boolean;
 }
 
 interface GameSession {
@@ -18,6 +19,11 @@ interface GameSession {
   players: Player[]
   currentQuestionIndex: number;
   questions: Question[];
+  round: {
+    answeredPlayers: Set<string>;
+    timeoutId?: NodeJS.Timeout;
+    };
+
 }
 
 function createPlayer(socketId: string, name: string, token: string) : Player{
@@ -26,7 +32,8 @@ function createPlayer(socketId: string, name: string, token: string) : Player{
         name,
         token,
         score: 0,
-        answers: []
+        answers: [],
+        isReady: false
     }
 }
 
@@ -37,6 +44,9 @@ function createGameRoom(gameId: string, quizId: string) : GameSession{
         players: [],
         currentQuestionIndex: 0,
         questions: [],
+        round: {
+            answeredPlayers: new Set(),
+        }
     }
 }
 
@@ -53,20 +63,52 @@ export default function setupGameServer(io: Server) {
             console.log("Error: no game to start, create a game first")
             return;
         }
-        startRound(CurGame.currentQuestionIndex);
+        startRound();
     }
 
-    function startRound(index: number) {
+    function startRound() {
+
+        if(!CurGame) {
+            console.log("No game to speak of.");
+            return;
+        }
+
         console.log("Starting round");
-        console.log("Sending question: " + index + " of current game");
-        const question = CurGame?.questions[index]; //type Question
+        console.log("Sending question: " + CurGame.currentQuestionIndex + " of current game");
+        const question = CurGame?.questions[CurGame.currentQuestionIndex]; //type Question
         if(!question){
             console.log("Error: question not found, maybe index probleem?")
         }
-        play.emit("current_question" , { question });
+
+        CurGame.round.answeredPlayers = new Set();
+
+        const ROUND_TIME = 10000;
+
+        CurGame.round.timeoutId = setTimeout(() => {
+            console.log("⏰ Round timed out");
+
+            nextRound();
+        }, ROUND_TIME);
+
+        play.emit("start_round" , { question });
         console.log("Question sent");
 
+    }
 
+    function nextRound(){
+        if(!CurGame) {
+            console.log("No game to speak of.");
+            return;
+        }
+        CurGame.currentQuestionIndex+=1;
+
+        if(CurGame.questions.length <= CurGame.currentQuestionIndex){
+            console.log("game finished");
+        }
+        // Start next round after small delay
+        setTimeout(() => {
+            startRound();
+        }, 1500);
     }
 
     play.on("connection", (socket: Socket) => {
@@ -104,6 +146,85 @@ export default function setupGameServer(io: Server) {
             console.log("Player has successfully joined")
 
             play.emit("game_joined")
+
+            if(CurGame.players.length >= 2){
+                console.log("All players joined, starting game");
+                startGame();
+            }
+
+        });
+
+        type PlayerReadyType = {token: String}
+        socket.on("player_ready", ({ token } : PlayerReadyType) => {
+            if (!CurGame) {
+            console.log("No game found for player_ready");
+            return;
+            }
+
+            // Type Player
+            const player = CurGame.players.find(p => p.token === token);
+
+            if (!player) {
+                console.log(`No player found with token ${token} in game ${CurGame.gameId}`);
+                return;
+            }
+
+            player.isReady = true
+            console.log(`✅ Player ${player.name} (${player.token}) is now ready.`);
+
+            // Optional: check if everyone is ready
+            const allReady = CurGame.players.every(p => p.isReady);
+            if (allReady) {
+                console.log(`All players in game ${CurGame.gameId} are ready! Starting timer...`);
+                play.emit("start_timer", { time: 10000 });
+
+
+                CurGame.players.forEach(p => (p.isReady = false));
+            }
+        });
+
+
+        type SubmitAnswerType = {selectedAnswer: string, token: string}
+        socket.on("submit_answer", ({selectedAnswer, token}: SubmitAnswerType) => {
+            console.log("Question is submitting")
+            if(!CurGame){
+                console.log("Game doesnt exist")
+                return;
+            }
+            const player = CurGame.players.find(p => p.token === token);
+            if (!player) {
+                console.log(`⚠ Invalid token used in submit_answer: ${token}`);
+                socket.emit("invalid_token"); // optional feedback
+                return;
+            }
+
+            const opponent = CurGame.players.find(p => p.token !== token);
+
+            if (!opponent) {
+                console.log(`No opponent found in this game`);
+                return;
+            }
+
+            CurGame.round.answeredPlayers.add(player.token);
+
+            const curQuestion: Question = CurGame?.questions[CurGame.currentQuestionIndex];
+            let isAllAnswered = false;
+            if(selectedAnswer === curQuestion.answer){
+                socket.emit("correct_answer")
+                play.to(opponent.socketId).emit("opponent_answer");
+                isAllAnswered = true;
+            } else {
+                socket.emit("incorrect_answer")
+            }
+
+            if(CurGame.round.answeredPlayers.size === CurGame.players.length || isAllAnswered){
+                if (CurGame.round.timeoutId) {
+                    clearTimeout(CurGame.round.timeoutId);
+                    CurGame.round.timeoutId = undefined;
+                }
+
+                nextRound();
+            }
 
         });
 
