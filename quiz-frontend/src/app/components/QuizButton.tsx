@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 interface QuizButtonProps {
   text: string;
   onClick?: () => void;
-  state?: "default" | "selected" | "correct" | "incorrect";
+  state?: "default" | "selected" | "correct" | "incorrect" | "locked";
 }
 
 
@@ -22,19 +22,15 @@ export default function QuizButton({ text, onClick, state = "default" }: QuizBut
     h-16 px-5 py-2 text-2xl font-bold text-center
     border-2 border-white
     transition-transform duration-200
-    hover:scale-105
-    active:scale-95 active:opacity-80
-    cursor-pointer
     flex items-center justify-center
     overflow-hidden
   `;
-
 
   let stateClasses = "";
 
   switch (state) {
     case "selected":
-      stateClasses = "bg-white text-black hover:bg-white hover:text-black";
+      stateClasses = "bg-white text-black scale-105";
       break;
     case "correct":
       stateClasses = "bg-green-600 text-white border-green-600";
@@ -42,9 +38,14 @@ export default function QuizButton({ text, onClick, state = "default" }: QuizBut
     case "incorrect":
       stateClasses = "bg-red-600 text-white border-red-600";
       break;
+    case "locked":
+      // 🔒 Keep same base color, just tone it down and freeze interactions
+      stateClasses = "bg-transparent text-white opacity-60 scale-90 cursor-default";
+      break;
     default:
-      stateClasses = "bg-transparent text-white hover:bg-white hover:text-black";
+      stateClasses = "bg-transparent cursor-pointer text-white hover:bg-white hover:text-black hover:scale-105 active:scale-95";
   }
+
 
   return (
     <button onClick={onClick} className={`${baseClasses} ${stateClasses}`}>

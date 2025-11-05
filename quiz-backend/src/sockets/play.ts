@@ -100,10 +100,20 @@ export default function setupGameServer(io: Server) {
             console.log("No game to speak of.");
             return;
         }
+        
         CurGame.currentQuestionIndex+=1;
 
         if(CurGame.questions.length <= CurGame.currentQuestionIndex){
+
+            setTimeout(() => {
+                const player1 = CurGame.players[0]
+                const player2 = CurGame.players[1]
+
+                play.to(player1?.socketId).emit("game_finished");
+            }, 1500);
+
             console.log("game finished");
+            return;
         }
         // Start next round after small delay
         setTimeout(() => {
@@ -226,6 +236,10 @@ export default function setupGameServer(io: Server) {
                 nextRound();
             }
 
+        });
+
+        socket.on("time_out", () => {
+            console.log("a player timed out");
         });
 
         socket.on("disconnect", () => {

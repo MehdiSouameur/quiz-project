@@ -1,9 +1,23 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import { io, Socket} from "socket.io-client";
 import QuizButton from "@/app/components/QuizButton";
 import SubmitButton from "@/app/components/SubmitButton";
+import Quiz from "../../offline/page";
+import { time } from "console";
+
+interface Option {
+  id: string;
+  text: string;
+}
+
+interface Question {
+  id: number;
+  title: string;
+  options: Option[];
+  answer: string;
+}
 
 function getCookie(name: string): string | null {
     return (
@@ -18,6 +32,9 @@ export default function Play() {
   /* Socket handling */ 
   const socketRef = useRef<Socket | null>(null);
   const initialized = useRef(false);
+  const [timer, setTimer] = useState<number>(100);
+  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
 
   useEffect(() => {
       if (initialized.current) return; // skip if already run
@@ -41,6 +58,7 @@ export default function Play() {
           const socket = io("http://localhost:3001/play", {
               auth: { token: token },
           });
+          socketRef.current = socket
 
           console.log("Joining Game: " + gameParam)
           socket.emit("join_game", {_gameId: gameParam, _playerName: name, _playerToken: token})
@@ -49,10 +67,93 @@ export default function Play() {
             console.log("Server response: Game joined!")
           })
 
+          type StartRoundType = {question: Question}
+          socket.on("start_round", ({question} : StartRoundType) => {
+            console.log("Question received: ")
+            console.log(question)
+
+            resetRound();
+            
+            setTitle(question.title);
+            setOptionA(question.options[0].text);
+            setOptionB(question.options[1].text);
+            setOptionC(question.options[2].text);
+            setOptionD(question.options[3].text);     
+            socket.emit("player_ready", {token: token});                               
+          });
+          
+          type TimeType = {time: number}
+          socket.on("start_timer", ({time}: TimeType) => {
+            console.log("Starting timer...")
+
+            setTimer(100);
+
+            const totalTime = time; // e.g., 10_000
+            const intervalTime = 100; // update every 0.1s
+            const decrement = (100 / totalTime) * intervalTime;
+
+            // TIMEOUT FUNCTION
+            const interval = setInterval(() => {
+              setTimer(prev => {
+                if (prev <= 0) {
+                  clearInterval(interval);
+                  console.log("ime’s up!");
+                  socket.emit("time_up");
+                  setResult("timeout");
+                  return 0;
+                }
+                return prev - decrement;
+              });
+            }, intervalTime);
+            timerIntervalRef.current = interval;
+          });
+
+          socket.on("correct_answer", () => {
+            console.log("Server: correct answer!");
+            setResult("correct");
+          });
+
+          socket.on("incorrect_answer", () => {
+            console.log("Server: incorrect answer...");
+            setResult("incorrect");
+          });
+
+          socket.on("opponent_answer", () => {
+            console.log("Opponent answered before you");
+
+            if (timerIntervalRef.current) {
+              clearInterval(timerIntervalRef.current);
+              timerIntervalRef.current = null;
+            }
+
+            setIsLocked(true);
+
+            setResult(prev => {
+              if (prev) return prev;
+              return "opponent-first"; 
+            });
+          });
 
           socket.on("game_cancelled", () => {
             console.log("Game cancelled by server")
           })
+
+
+          socket.on("game_finished", () => {
+
+            console.log("Game finished event received");
+
+            // ✅ store something in localStorage
+            localStorage.setItem("testMessage", "Local storage works!");
+
+            // ✅ read the game ID from query string
+            const params = new URLSearchParams(window.location.search);
+            const gameParam = params.get("game") || "unknown";
+
+            // ✅ redirect to results page with the game query
+            window.location.href = `http://localhost:3000/quiz/quiz-010/multiplayerV2/result?game=${gameParam}`;    
+                    
+          });
     }
 
       init();
@@ -60,13 +161,63 @@ export default function Play() {
 
 
   /* Quiz front handling */
+  const [title, setTitle] = useState<string>("");
+  const [optionA, setOptionA] = useState<string>("");
+  const [optionB, setOptionB] = useState<string>("");
+  const [optionC, setOptionC] = useState<string>("");
+  const [optionD, setOptionD] = useState<string>("");
+  const [isLocked, setIsLocked] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  type ResultState = "correct" | "incorrect" | "opponent-first" | "timeout" | null;
+  const [result, setResult] = useState<ResultState>(null);
+
   const selectAnswer = (answer: string) => {
+    if(isLocked) return;
     setSelectedAnswer(answer);
   };
-  const getButtonState = (optionLetter: string): "default" | "selected" => {
-    return selectedAnswer === optionLetter ? "selected" : "default";
+  const getButtonState = (optionLetter: string): "default" | "selected" | "locked" => {
+      if (isLocked && selectedAnswer !== optionLetter) return "locked";
+      if (selectedAnswer === optionLetter) return "selected";
+      return "default";
   };
+
+  function SubmitAnswer() {
+    if(!selectedAnswer) return;
+    console.log("Submitting answer: " + selectedAnswer)
+    const socket = socketRef.current
+    if(!socket){
+      console.log("Error: socket is null");
+      return
+    }
+
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+
+    setIsLocked(true);
+    let token = getCookie("token");
+    socket.emit("submit_answer", {selectedAnswer, token});
+  }
+
+    function resetRound() {
+    console.log("🔄 Resetting round...");
+
+    // Stop leftover timer intervals
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+
+    // Reset UI states
+    setIsLocked(false);
+    setSelectedAnswer(null);
+    setResult(null);
+
+    // Reset timer bar to full width (will animate down when timer starts)
+    setTimer(100);
+  }
+
 
   return (
     <main className="flex h-[100vh] justify-center items-center">
@@ -80,38 +231,64 @@ export default function Play() {
               leading-snug h-[6rem] flex items-center justify-center
             "
           >
-            Sample Question: What is the capital of France?
+            {title}
           </h1>
         </div>
 
-        {/* 🟢 Static progress bar */}
+        {/* Result message */}
+        <div>
+          <h1
+            className={`
+              flex justify-center text-4xl font-black pb-5 transition-opacity duration-300
+              ${
+                result === null
+                  ? "invisible opacity-0"
+                  : result === "correct"
+                    ? "text-green-300 visible opacity-100"
+                    : result === "incorrect"
+                      ? "text-red-500 visible opacity-100"
+                      : result === "timeout"
+                        ? "text-red-500 visible opacity-100"
+                        : "text-yellow-400 visible opacity-100"
+              }
+            `}
+          >
+            {result === "correct" && "Correct answer!"}
+            {result === "incorrect" && "Incorrect"}
+            {result === "opponent-first" && "Opponent answered first !"}
+            {result === "timeout" && "Ran out of time !"}
+          </h1>
+        </div>
+
+
+        {/* 🟢 Static timer bar */}
         <div className="w-full h-3 bg-gray-300 rounded overflow-hidden mb-4 mt-4">
           <div
             id="progress-bar"
-            className="h-full bg-orange-500 transition-all duration-500"
-            style={{ width: "60%" }} // just static for now
+            className="h-full bg-orange-500 transition-all duration-100"
+            style={{ width: `${timer}%` }}
           />
         </div>
 
         {/* 🟣 Options */}
         <div className="grid grid-cols-2 w-full gap-4">
           <QuizButton
-            text="Paris"
+            text={optionA}
             state={getButtonState("a")}
             onClick={() => selectAnswer("a")}
           />
           <QuizButton
-            text="London"
+            text={optionB}
             state={getButtonState("b")}
             onClick={() => selectAnswer("b")}
           />
           <QuizButton
-            text="Berlin"
+            text={optionC}
             state={getButtonState("c")}
             onClick={() => selectAnswer("c")}
           />
           <QuizButton
-            text="Madrid"
+            text={optionD}
             state={getButtonState("d")}
             onClick={() => selectAnswer("d")}
           />
@@ -121,7 +298,8 @@ export default function Play() {
         <div className="flex justify-center mt-10 w-full">
           <SubmitButton
             text="Lock Answer"
-            onClick={() => console.log("Answer locked")}
+            onClick={() => SubmitAnswer()}
+            disabled={isLocked}
           />
         </div>
 
