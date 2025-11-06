@@ -101,15 +101,17 @@ export default function setupGameServer(io: Server) {
             return;
         }
         
-        CurGame.currentQuestionIndex+=1;
+        const game = CurGame
+        game.currentQuestionIndex+=1;
 
-        if(CurGame.questions.length <= CurGame.currentQuestionIndex){
+        if(game.questions.length <= game.currentQuestionIndex){
 
             setTimeout(() => {
-                const player1 = CurGame.players[0]
-                const player2 = CurGame.players[1]
+                const player1 = game.players[0]
+                const player2 = game.players[1]
 
-                play.to(player1?.socketId).emit("game_finished");
+                play.to(player1?.socketId).emit("game_finished", {player: player1.name, player_score: player1.score, opponent: player2.name, opponent_score: player2.score});
+                play.to(player2?.socketId).emit("game_finished", {player: player2.name, player_score: player2.score, opponent: player1.name, opponent_score: player1.score});                
             }, 1500);
 
             console.log("game finished");
@@ -219,11 +221,15 @@ export default function setupGameServer(io: Server) {
 
             const curQuestion: Question = CurGame?.questions[CurGame.currentQuestionIndex];
             let isAllAnswered = false;
+            // CORRECT
             if(selectedAnswer === curQuestion.answer){
                 socket.emit("correct_answer")
                 play.to(opponent.socketId).emit("opponent_answer");
                 isAllAnswered = true;
-            } else {
+                player.score+=100
+            } 
+            // INCORRECT
+            else {
                 socket.emit("incorrect_answer")
             }
 

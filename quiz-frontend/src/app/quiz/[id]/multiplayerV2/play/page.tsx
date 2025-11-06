@@ -139,9 +139,22 @@ export default function Play() {
           })
 
 
-          socket.on("game_finished", () => {
+          type GameFinishedPayload = {
+            player: string;
+            player_score: number;
+            opponent: string;
+            opponent_score: number;
+          };
+          socket.on("game_finished", (data: GameFinishedPayload)  => {
 
             console.log("Game finished event received");
+            console.log("Payload:", data);
+
+            // Let's also print each value explicitly:
+            console.log("Player:", data.player);
+            console.log("Player Score:", data.player_score);
+            console.log("Opponent:", data.opponent);
+            console.log("Opponent Score:", data.opponent_score);
 
             // ✅ store something in localStorage
             localStorage.setItem("testMessage", "Local storage works!");
@@ -151,7 +164,7 @@ export default function Play() {
             const gameParam = params.get("game") || "unknown";
 
             // ✅ redirect to results page with the game query
-            window.location.href = `http://localhost:3000/quiz/quiz-010/multiplayerV2/result?game=${gameParam}`;    
+            //window.location.href = `http://localhost:3000/quiz/quiz-010/multiplayerV2/result?game=${gameParam}`;    
                     
           });
     }
