@@ -41,7 +41,7 @@ export default function Quiz() {
   const [showResults, setShowResults] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(100); // percentage
-  const totalTime = 60; // seconds
+  const totalTime = 20; // seconds
   const progressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const finishTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const nextQuestionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -105,7 +105,7 @@ export default function Quiz() {
 
   const evaluateQuestion = async (auto = false) => {
     const answer = selectedAnswerRef.current;
-
+    console.log("current answer is: " + answer)
     if (!answer && !auto) return;
 
     // freeze bar
@@ -195,67 +195,78 @@ export default function Quiz() {
   };
 
   return (
-    <main className="flex h-[100vh] justify-center items-center">
-      <div className="flex flex-col items-center w-full max-w-xl">
+      <main className="flex min-h-screen justify-center items-center px-10 py-10">
+        <div className="flex flex-col items-center w-full max-w-lg md:max-w-xl space-y-4">
 
-        <div className="flex flex-col">
-          <h1   className="
-            text-3xl font-bold text-center break-words 
-            leading-snug h-[6rem] flex items-center justify-center
-          "> {quizData.question.title}</h1>
-        </div>
+          {/* Question */}
+          <div className="flex flex-col">
+            <h1
+              className="
+                text-center font-bold break-words leading-tight
+                text-xl sm:text-xl md:text-2xl 
+                min-h-[4rem] flex items-center justify-center
+              "
+            >
+              {quizData.question.title}
+            </h1>
+          </div>
 
-        <div>
+          {/* Result Feedback */}
           <h1
-            className={`flex justify-center text-4xl font-black pb-5 transition-opacity duration-300 ${
-              showResults ? correctAnswer === selectedAnswer
-                  ? "text-green-300 visible opacity-100"
-                  : "text-red-500 visible opacity-100"
-                : "invisible opacity-0"
-            }`}
+            className={`
+              text-center text-xl sm:text-2xl md:text-3xl font-black transition-opacity duration-300
+              ${showResults
+                ? correctAnswer === selectedAnswer
+                  ? "text-green-300 opacity-100"
+                  : "text-red-500 opacity-100"
+                : "opacity-0"
+              }
+            `}
           >
             {correctAnswer === selectedAnswer ? "Correct answer!" : "Wrong answer!"}
           </h1>
+
+          {/* Progress Bar */}
+          <div className="h-2 bg-gray-300 rounded overflow-hidden w-60 sm:w-70 md:w-90 mb-10">
+            <div id="progress-bar" className="h-full bg-orange-500" style={{ width: "100%" }}/>
+          </div>
+
+          {/* Options Grid */}
+          <div className="flex justify-center mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-3 sm:gap-4">
+              <QuizButton
+                text={quizData.question.options[0].text}
+                state={getButtonState("a")}
+                onClick={() => selectAnswer("a")}
+              />
+              <QuizButton
+                text={quizData.question.options[1].text}
+                state={getButtonState("b")}
+                onClick={() => selectAnswer("b")}
+              />
+              <QuizButton
+                text={quizData.question.options[2].text}
+                state={getButtonState("c")}
+                onClick={() => selectAnswer("c")}
+              />
+              <QuizButton
+                text={quizData.question.options[3].text}
+                state={getButtonState("d")}
+                onClick={() => selectAnswer("d")}
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="flex justify-center w-full">
+            <SubmitButton 
+              text="Lock Answer" 
+              onClick={() => evaluateQuestion(false)} 
+            />
+          </div>
+
         </div>
- 
-        <div className="w-full h-3 bg-gray-300 rounded overflow-hidden mb-4">
-          <div
-            id="progress-bar"
-            className="h-full bg-orange-500"
-            style={{ width: "100%" }}
-          />
-        </div>
+      </main>
 
-
-
-        <div className="grid grid-cols-2 w-full gap-4">
-        <QuizButton
-          text={quizData.question.options[0].text}
-          state={getButtonState("a")}
-          onClick={() => selectAnswer("a")}
-        />
-        <QuizButton
-          text={quizData.question.options[1].text}
-          state={getButtonState("b")}
-          onClick={() => selectAnswer("b")}
-        />
-        <QuizButton
-          text={quizData.question.options[2].text}
-          state={getButtonState("c")}
-          onClick={() => selectAnswer("c")}
-        />
-        <QuizButton
-          text={quizData.question.options[3].text}
-          state={getButtonState("d")}
-          onClick={() => selectAnswer("d")}
-        />
-        </div>
-
-        <div className="flex justify-center mt-10 w-full">
-          <SubmitButton text="Lock Answer" onClick={() => evaluateQuestion(false)}></SubmitButton>
-        </div>
-
-      </div>
-    </main>
   );
 }

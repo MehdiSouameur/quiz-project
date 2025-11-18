@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 interface QuizButtonProps {
   text: string;
   onClick?: () => void;
-  state?: "default" | "selected" | "correct" | "incorrect" | "locked";
+  state?: "default" | "selected" | "correct" | "incorrect" | "locked" | "opponent_answered_incorrect" | "opponent_answered_correct" |"double_incorrect";
 }
 
 
@@ -19,12 +19,15 @@ export default function QuizButton({ text, onClick, state = "default" }: QuizBut
   }, [text]);
 
   const baseClasses = `
-    h-16 px-5 py-2 text-2xl font-bold text-center
+    w-50 sm:w-70
+    min-h-12 sm:min-h-14 md:min-h-16
+    px-3 sm:px-4 md:px-5
     border-2 border-white
     transition-transform duration-200
     flex items-center justify-center
-    overflow-hidden
+    overflow-hidden text-ellipsis
   `;
+
 
   let stateClasses = "";
 
@@ -33,11 +36,23 @@ export default function QuizButton({ text, onClick, state = "default" }: QuizBut
       stateClasses = "bg-white text-black scale-105";
       break;
     case "correct":
-      stateClasses = "bg-green-600 text-white border-green-600";
+      stateClasses = "bg-green-600 text-white border-green-600 scale-105";
       break;
     case "incorrect":
-      stateClasses = "bg-red-600 text-white border-red-600";
+      stateClasses = "bg-red-600 text-white border-red-600 opacity-60 scale-90";
       break;
+    case "opponent_answered_incorrect":
+      stateClasses = "bg-yellow-600 text-white border-white opacity-60 scale-90";
+      break;
+    case "opponent_answered_correct":
+      stateClasses = "bg-green-600 text-white border-green-600 scale-105";
+      break;
+    case "double_incorrect":
+      stateClasses = `
+        bg-gradient-to-r from-red-600 to-yellow-400
+        text-white border-red-600 scale-90 opacity-80
+      `;
+      break;        
     case "locked":
       // 🔒 Keep same base color, just tone it down and freeze interactions
       stateClasses = "bg-transparent text-white opacity-60 scale-90 cursor-default";
@@ -48,14 +63,25 @@ export default function QuizButton({ text, onClick, state = "default" }: QuizBut
 
 
   return (
-    <button onClick={onClick} className={`${baseClasses} ${stateClasses}`}>
+    <button
+      onClick={onClick}
+      className={`${baseClasses} ${stateClasses} relative`}  // ✅ relative
+    >
       <span
         ref={textRef}
-        className={`block truncate ${isOverflow ? "text-base" : "text-2xl"}`}
+        className={`block truncate ${
+          isOverflow
+            ? "text-xs sm:text-base md:text-md"
+            : "text-md sm:text-lg md:text-xl"
+        }`}
       >
         {text}
       </span>
 
+      {state === "opponent_answered_correct" && (
+        <span className="absolute top-2 right-2 w-5 h-5 bg-yellow-400 rounded-full shadow-md"></span>
+      )}
     </button>
   );
+
 }

@@ -51,35 +51,60 @@ export default function Result() {
     const totalCount = answerBools.length;
 
     return (
-    <main className="flex h-[100vh] justify-center items-center">
-        <div className="flex flex-col items-center w-full max-w-xl">
-            <h1   className="
-            text-3xl font-bold text-center break-words 
-            leading-snug h-[6rem] flex items-center justify-center
-            "> You finished the quiz, nice one!
-            </h1>
+        <main className="flex min-h-screen justify-center items-center px-10 py-10">
+            <div className="flex flex-col items-center w-full max-w-lg md:max-w-xl space-y-4">
+                
+                {/* Title */}
+                <h1
+                className="
+                    text-center font-bold break-words leading-tight
+                    text-xl sm:text-2xl md:text-3xl
+                    min-h-[4rem] flex items-center justify-center
+                "
+                >
+                You finished the quiz, nice one!
+                </h1>
 
-            <div>
+                {/* Score */}
+                <div className="text-base sm:text-lg md:text-xl text-center">
                 Correct answers: {correctCount}/{totalCount}
-            </div>
-            
-            {/* Circular Buttons */}
-            <div className="flex space-x-4 mt-6">
-            <Link
-                href={`/quiz/${id}`}
-                className="flex items-center justify-center w-20 p-2 rounded-xl bg-blue-500 text-white font-bold hover:bg-blue-600 transition-colors"
-            >
-                Restart
-            </Link>
+                </div>
+                
+                {/* Buttons */}
+                <div className="flex flex-row sm:flex-row gap-3 sm:gap-4 mt-4">
+                    <Link
+                        href={`/quiz/${id}`}
+                        className="
+                        flex items-center justify-center
+                        px-4 py-2
+                        rounded-xl
+                        bg-blue-500 text-white font-bold
+                        text-sm sm:text-base
+                        hover:bg-blue-600
+                        transition-colors
+                        "
+                    >
+                        Restart
+                    </Link>
 
-            <Link
-                href="/"
-                className="flex items-center justify-center w-20 rounded-xl bg-gray-300 text-black font-bold hover:bg-gray-400 transition-colors"
-            >
-                Menu
-            </Link>
+                    <Link
+                        href="/"
+                        className="
+                        flex items-center justify-center
+                        px-4 py-2
+                        rounded-xl
+                        bg-gray-300 text-black font-bold
+                        text-sm sm:text-base
+                        hover:bg-gray-400
+                        transition-colors
+                        "
+                    >
+                        Menu
+                    </Link>
+                </div>
+
             </div>
-        </div>
-    </main>
+        </main>
+
     )
 }

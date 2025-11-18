@@ -13,18 +13,21 @@ interface Player {
 }
 
 interface GameSession {
-  gameId: string;
-  quizId: string;
-  playerId?: string;
-  players: Player[]
-  currentQuestionIndex: number;
-  questions: Question[];
-  round: {
-    answeredPlayers: Set<string>;
-    timeoutId?: NodeJS.Timeout;
-    };
+    gameId: string;
+    quizId: string;
+    playerId?: string;
+    players: Player[]
+    currentQuestionIndex: number;
+    questions: Question[];
+    round: {
+        answeredPlayers: Set<string>;
+        timeoutId?: NodeJS.Timeout;
+        };
+    quiz_title: string;
 
 }
+
+type WinState = "victory" | "defeat" | "tie";
 
 function createPlayer(socketId: string, name: string, token: string) : Player{
     return{
@@ -37,16 +40,17 @@ function createPlayer(socketId: string, name: string, token: string) : Player{
     }
 }
 
-function createGameRoom(gameId: string, quizId: string) : GameSession{
+function createGameRoom(gameId: string, quizId: string, quiz_title: string) : GameSession{
     return{
         gameId,
-        quizId: "",
+        quizId: quizId,
         players: [],
         currentQuestionIndex: 0,
         questions: [],
         round: {
             answeredPlayers: new Set(),
-        }
+        },
+        quiz_title: quiz_title,
     }
 }
 
@@ -109,9 +113,50 @@ export default function setupGameServer(io: Server) {
             setTimeout(() => {
                 const player1 = game.players[0]
                 const player2 = game.players[1]
+                const quizTitle = game.quiz_title;
+                let winner: "p1" | "p2" | "tie";
 
-                play.to(player1?.socketId).emit("game_finished", {player: player1.name, player_score: player1.score, opponent: player2.name, opponent_score: player2.score});
-                play.to(player2?.socketId).emit("game_finished", {player: player2.name, player_score: player2.score, opponent: player1.name, opponent_score: player1.score});                
+                if (player1.score > player2.score) winner = "p1";
+                else if (player2.score > player1.score) winner = "p2";
+                else winner = "tie";
+                player1.score > player2.score ? player1.token :
+                player2.score > player1.score ? player2.token :
+                "tie";
+
+                play.to(player1.socketId).emit("game_finished", {
+                    player: player1.name,
+                    player_score: player1.score,
+
+                    opponent: player2.name,
+                    opponent_score: player2.score,
+
+                    win_state:
+                        winner === "tie"
+                        ? "tie"
+                        : winner === "p1"
+                            ? "victory"
+                            : "defeat",
+
+                    quiz_title: quizTitle,
+                });
+
+                play.to(player2.socketId).emit("game_finished", {
+                    player: player2.name,
+                    player_score: player2.score,
+
+                    opponent: player1.name,
+                    opponent_score: player1.score,
+
+                    win_state:
+                        winner === "tie"
+                        ? "tie"
+                        : winner === "p2"
+                            ? "victory"
+                            : "defeat",
+
+                    quiz_title: quizTitle,
+                });
+
             }, 1500);
 
             console.log("game finished");
@@ -120,7 +165,7 @@ export default function setupGameServer(io: Server) {
         // Start next round after small delay
         setTimeout(() => {
             startRound();
-        }, 1500);
+        }, 3000);
     }
 
     play.on("connection", (socket: Socket) => {
@@ -134,7 +179,7 @@ export default function setupGameServer(io: Server) {
                 return;
             }
 
-            CurGame = createGameRoom(_gameId, _quizId);
+            CurGame = createGameRoom(_gameId, _quizId, _quiz.name);
         });
 
         type JoinGameType = {_gameId: string, _playerName: string, _playerToken: string}
@@ -221,17 +266,47 @@ export default function setupGameServer(io: Server) {
 
             const curQuestion: Question = CurGame?.questions[CurGame.currentQuestionIndex];
             let isAllAnswered = false;
+
+            // TIMEOUT
+            if (!selectedAnswer) {
+                console.log("Player ran out of time");
+
+                socket.emit("timeout"); 
+
+                play.to(opponent.socketId).emit("opponent_answer", {
+                    selected: null,   
+                    correct: false   
+                });
+
+                CurGame.round.answeredPlayers.add(player.token);
+            }
             // CORRECT
-            if(selectedAnswer === curQuestion.answer){
-                socket.emit("correct_answer")
-                play.to(opponent.socketId).emit("opponent_answer");
+            else if (selectedAnswer === curQuestion.answer) {
+    
+                socket.emit("correct_answer");
+                player.score += 100;
+
+                play.to(opponent.socketId).emit("opponent_answer", {
+                    selected: selectedAnswer,
+                    correct: true
+                });
+
+                CurGame.round.answeredPlayers.add(player.token);
                 isAllAnswered = true;
-                player.score+=100
-            } 
+            }
             // INCORRECT
             else {
-                socket.emit("incorrect_answer")
+                socket.emit("incorrect_answer");
+
+                play.to(opponent.socketId).emit("opponent_answer", {
+                    selected: selectedAnswer,
+                    correct: false
+                });
+
+                CurGame.round.answeredPlayers.add(player.token);
             }
+
+
 
             if(CurGame.round.answeredPlayers.size === CurGame.players.length || isAllAnswered){
                 if (CurGame.round.timeoutId) {
@@ -274,7 +349,7 @@ export function CreateGame(io: Server, gameId: string, quizId: string) {
   }
 
   // Maybe store the game in memory or DB
-  CurGame = createGameRoom(gameId, quizId);
+  CurGame = createGameRoom(gameId, quizId, _quiz.name);
   CurGame.questions = _quiz.questions;
   console.log("New game " + gameId + "created")
   console.log(CurGame)

@@ -203,22 +203,42 @@ export default function Lobby() {
     }, [router]);    
 
     return (
-        <main className="flex flex-col h-[100vh] justify-center items-center">
-            <h1 className="text-white text-center font-black text-3xl mb-12">
-                Game lobby<br />
-                {quizName} Quiz
-            </h1>
+        <main className="flex flex-col min-h-screen justify-center items-center px-4 py-8 sm:px-6 sm:py-10">
+        <h1 className="text-white text-center font-black text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-10">
+            Game lobby
+            <br />
+            <span className="text-lg sm:text-2xl md:text-3xl font-semibold">
+            {quizName} Quiz
+            </span>
+        </h1>
 
-            <div className="grid grid-cols-3 items-center justify-items-center rounded-xl p-4 text-white w-[60%] gap-y-2">
-                {/* Row 1 — names */}
-                <div className="text-3xl font-bold text-center">{username}</div>
-                <div className="text-5xl font-semibold text-amber-500">VS</div>
-                <div className="text-3xl font-bold text-center">
-                {opponent ? opponent : "Waiting for opponent..."}
-                </div>
+        <div
+            className="
+            grid grid-cols-3 items-center justify-items-center
+            rounded-xl
+            w-full max-w-md sm:max-w-xl
+            p-3 sm:p-4 md:p-6
+            text-white
+            gap-y-2 sm:gap-y-3
+            border border-white/10 bg-white/5
+            "
+        >
+            {/* Row 1 — names */}
+            <div className="text-lg sm:text-2xl md:text-3xl font-bold text-center break-words px-1">
+            {username}
+            </div>
 
-                {/* Row 2 — icons */}
-                <div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-semibold text-amber-500">
+            VS
+            </div>
+
+            <div className="text-lg sm:text-2xl md:text-3xl font-bold text-center break-words px-1">
+            {opponent ? opponent : "Waiting for opponent..."}
+            </div>
+
+            {/* Row 2 — icons */}
+            <div className="mt-2 sm:mt-3">
+                <div className="scale-75 sm:scale-90 md:scale-100">
                 <Image
                     src={playerReady ? "/GreenTick.svg" : "/RedX.svg"}
                     alt={playerReady ? "Ready" : "Not Ready"}
@@ -227,10 +247,12 @@ export default function Lobby() {
                     className={`${opponent ? "opacity-100" : "opacity-0"} transition-opacity duration-300`}
                 />
                 </div>
+            </div>
 
-                <div /> {/* empty middle cell */}
+            <div /> {/* empty middle cell */}
 
-                <div>
+            <div className="mt-2 sm:mt-3">
+                <div className="scale-75 sm:scale-90 md:scale-100">
                 <Image
                     src={opponentReady ? "/GreenTick.svg" : "/RedX.svg"}
                     alt={opponentReady ? "Ready" : "Not Ready"}
@@ -240,48 +262,57 @@ export default function Lobby() {
                 />
                 </div>
             </div>
+        </div>
 
-            <div>
-                {/* Always render the room ID container */}
-                <p
-                className={`text-gray-400 mt-6 transition-opacity duration-300 ${
-                    gameId ? "opacity-100" : "opacity-0"
-                }`}
-                >
-                Room ID: <span className="font-mono">{gameId || "••••••••"}</span>
-                </p>
-            </div>
-
-            <div className="mt-10">
-                {/* Always render the button placeholder */}
-                <button
-                onClick={readyUp}
-                disabled={!opponent}
-                className={`flex items-center justify-center p-2 rounded-xl text-white font-bold transition-colors cursor-pointer
-                    ${
-                    playerReady
-                        ? "bg-red-600 hover:bg-red-700"
-                        : "bg-lime-600 hover:bg-lime-700"
-                    }
-                    ${opponent ? "opacity-100" : "opacity-0 pointer-events-none"} 
-                `}
-                >
-                {playerReady ? "Unready" : "Ready up"}
-                </button>
-            </div>
-
-            <div
-            className={`text-xl py-12 font-bold flex flex-col items-center transition-all duration-300 transform ${
-                countdown !== null ? "opacity-100 scale-100" : "opacity-0 scale-50"
-            }`}
+        {/* Room ID */}
+        <div>
+            <p
+            className={`
+                text-xs sm:text-sm md:text-base text-gray-400 mt-4 sm:mt-6
+                transition-opacity duration-300 text-center
+                ${gameId ? "opacity-100" : "opacity-0"}
+            `}
             >
+            Room ID:{" "}
+            <span className="font-mono bg-black/40 px-2 py-1 rounded-md">
+                {gameId || "••••••••"}
+            </span>
+            </p>
+        </div>
+
+        {/* Ready button */}
+        <div className="mt-6 sm:mt-8 w-full flex justify-center">
+            <button
+            onClick={readyUp}
+            disabled={!opponent}
+            className={`
+                w-50 md:w-full max-w-xs
+                flex items-center justify-center
+                px-4 py-2 sm:px-5 sm:py-3
+                rounded-xl text-white font-bold text-sm sm:text-base
+                transition-colors
+                ${playerReady ? "bg-red-600 hover:bg-red-700" : "bg-lime-600 hover:bg-lime-700"}
+                ${opponent ? "opacity-100" : "opacity-0 pointer-events-none"}
+            `}
+            >
+            {playerReady ? "Unready" : "Ready up"}
+            </button>
+        </div>
+
+        {/* Countdown */}
+        <div
+            className={`
+            text-center text-base sm:text-lg md:text-xl py-6 sm:py-8 font-bold
+            flex flex-col items-center
+            transition-all duration-300 transform
+            ${countdown !== null ? "opacity-100 scale-100" : "opacity-0 scale-50"}
+            `}
+        >
             Game starting in:
-            <div className="text-6xl font-black transition-all duration-300 text-center">
-                {countdown !== null ? countdown : ""}
+            <div className="text-4xl sm:text-5xl md:text-6xl font-black mt-2">
+            {countdown !== null ? countdown : ""}
             </div>
-            </div>
-
-
+        </div>
         </main>
 
     );

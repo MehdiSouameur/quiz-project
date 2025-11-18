@@ -74,6 +74,9 @@ export default function Play() {
 
             resetRound();
             
+            console.log("Correct answer is: " + question.answer)
+            setCorrectAnswer(question.answer); 
+            
             setTitle(question.title);
             setOptionA(question.options[0].text);
             setOptionB(question.options[1].text);
@@ -100,6 +103,7 @@ export default function Play() {
                   console.log("ime’s up!");
                   socket.emit("time_up");
                   setResult("timeout");
+                  setIsLocked(true);
                   return 0;
                 }
                 return prev - decrement;
@@ -118,32 +122,56 @@ export default function Play() {
             setResult("incorrect");
           });
 
-          socket.on("opponent_answer", () => {
-            console.log("Opponent answered before you");
+          type OpponentAnswerPayload = {
+            selected: string | null;
+            correct: boolean;
+          };          
+          socket.on("opponent_answer", ({ selected, correct }: OpponentAnswerPayload) => {
+              
+              setOpponentSelected(selected);
+              setOpponentCorrect(correct);
 
-            if (timerIntervalRef.current) {
-              clearInterval(timerIntervalRef.current);
-              timerIntervalRef.current = null;
-            }
+              // ✅ Opponent timeout → do nothing special
+              if (selected === null) {
+                  console.log("Opponent timed out");
+                  return;
+              }
 
-            setIsLocked(true);
+              // ✅ Opponent correct → lock and stop timer immediately
+              if (correct === true) {
+                  console.log("Opponent answered correctly!");
 
-            setResult(prev => {
-              if (prev) return prev;
-              return "opponent-first"; 
-            });
+                  if (timerIntervalRef.current) {
+                      clearInterval(timerIntervalRef.current);
+                      timerIntervalRef.current = null;
+                  }
+
+                  setIsLocked(true);
+
+                  // show user that opponent beat them IF they haven't answered yet
+                  setResult(prev => prev ?? "opponent-first");
+
+                  return;
+              }
+
+              // ✅ Opponent incorrect → don’t interrupt the player
+              console.log("Opponent answered incorrectly");
           });
+
 
           socket.on("game_cancelled", () => {
             console.log("Game cancelled by server")
           })
 
 
+          type WinState = "victory" | "defeat" | "tie";
           type GameFinishedPayload = {
             player: string;
             player_score: number;
             opponent: string;
             opponent_score: number;
+            win_state: WinState;
+            quiz_title: string;
           };
           socket.on("game_finished", (data: GameFinishedPayload)  => {
 
@@ -158,13 +186,14 @@ export default function Play() {
 
             // ✅ store something in localStorage
             localStorage.setItem("testMessage", "Local storage works!");
+            localStorage.setItem("gameResult", JSON.stringify(data));
 
             // ✅ read the game ID from query string
             const params = new URLSearchParams(window.location.search);
             const gameParam = params.get("game") || "unknown";
 
             // ✅ redirect to results page with the game query
-            //window.location.href = `http://localhost:3000/quiz/quiz-010/multiplayerV2/result?game=${gameParam}`;    
+            window.location.href = `http://localhost:3000/quiz/quiz-010/multiplayerV2/result?game=${gameParam}`;    
                     
           });
     }
@@ -183,16 +212,70 @@ export default function Play() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   type ResultState = "correct" | "incorrect" | "opponent-first" | "timeout" | null;
   const [result, setResult] = useState<ResultState>(null);
+  const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
+  const [opponentSelected, setOpponentSelected] = useState<string | null>(null);
+  const [opponentCorrect, setOpponentCorrect] = useState<boolean | null>(null);  
+
 
   const selectAnswer = (answer: string) => {
     if(isLocked) return;
     setSelectedAnswer(answer);
   };
-  const getButtonState = (optionLetter: string): "default" | "selected" | "locked" => {
-      if (isLocked && selectedAnswer !== optionLetter) return "locked";
-      if (selectedAnswer === optionLetter) return "selected";
-      return "default";
+
+  const getButtonState = (
+    optionLetter: string
+  ):
+    | "default"
+    | "selected"
+    | "locked"
+    | "correct"
+    | "incorrect"
+    | "opponent_answered_correct"
+    | "opponent_answered_incorrect"
+    | "double_incorrect" => {
+
+    // ✅ Before locking → normal interaction
+    if (!isLocked || !result) {
+      return selectedAnswer === optionLetter ? "selected" : "default";
+    }
+
+    // ✅ After lock — round resolved
+
+    // ✅ (1) YOU selected this answer
+    if (optionLetter === selectedAnswer) {
+      // You correct
+      if (selectedAnswer === correctAnswer) return "correct";
+
+      // You wrong — but did opponent pick same wrong answer?
+      if (
+        opponentSelected === selectedAnswer &&
+        opponentCorrect === false
+      ) {
+        return "double_incorrect";
+      }
+
+      // Regular incorrect
+      return "incorrect";
+    }
+
+    // ✅ (2) Opponent selected this answer (and you didn't)
+    if (optionLetter === opponentSelected) {
+      return opponentCorrect
+        ? "opponent_answered_correct"
+        : "opponent_answered_incorrect";
+    }
+
+    // ✅ (3) Highlight the correct answer (you were wrong or opponent-first)
+    if (optionLetter === correctAnswer) {
+      return "correct";
+    }
+
+    // ✅ (4) Everything else locked
+    return "locked";
   };
+
+
+
 
   function SubmitAnswer() {
     if(!selectedAnswer) return;
@@ -226,6 +309,8 @@ export default function Play() {
     setIsLocked(false);
     setSelectedAnswer(null);
     setResult(null);
+    setOpponentCorrect(null);
+    setOpponentSelected(null);
 
     // Reset timer bar to full width (will animate down when timer starts)
     setTimer(100);
@@ -233,15 +318,17 @@ export default function Play() {
 
 
   return (
-    <main className="flex h-[100vh] justify-center items-center">
-      <div className="flex flex-col items-center w-full max-w-xl">
+    <main className="flex min-h-screen justify-center items-center px-10 py-10">
+      <div className="flex flex-col items-center w-full max-w-lg md:max-w-xl">
         
         {/* 🟠 Question Title */}
         <div className="flex flex-col">
           <h1
             className="
-              text-3xl font-bold text-center break-words 
-              leading-snug h-[6rem] flex items-center justify-center
+              text-center font-bold text-white break-words 
+              leading-tight min-h-[4rem]
+              text-xl sm:text-xl md:text-2xl
+              flex items-center justify-center
             "
           >
             {title}
@@ -252,7 +339,9 @@ export default function Play() {
         <div>
           <h1
             className={`
-              flex justify-center text-4xl font-black pb-5 transition-opacity duration-300
+              flex justify-center text-center
+              text-base sm:text-lg md:text-xl font-black
+              transition-opacity duration-300
               ${
                 result === null
                   ? "invisible opacity-0"
@@ -273,9 +362,8 @@ export default function Play() {
           </h1>
         </div>
 
-
         {/* 🟢 Static timer bar */}
-        <div className="w-full h-3 bg-gray-300 rounded overflow-hidden mb-4 mt-4">
+        <div className="h-2 bg-gray-300 rounded overflow-hidden w-60 sm:w-70 md:w-90 mb-5 mt-5">
           <div
             id="progress-bar"
             className="h-full bg-orange-500 transition-all duration-100"
@@ -284,31 +372,33 @@ export default function Play() {
         </div>
 
         {/* 🟣 Options */}
-        <div className="grid grid-cols-2 w-full gap-4">
-          <QuizButton
-            text={optionA}
-            state={getButtonState("a")}
-            onClick={() => selectAnswer("a")}
-          />
-          <QuizButton
-            text={optionB}
-            state={getButtonState("b")}
-            onClick={() => selectAnswer("b")}
-          />
-          <QuizButton
-            text={optionC}
-            state={getButtonState("c")}
-            onClick={() => selectAnswer("c")}
-          />
-          <QuizButton
-            text={optionD}
-            state={getButtonState("d")}
-            onClick={() => selectAnswer("d")}
-          />
+        <div className="flex justify-center mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-3 sm:gap-4">
+            <QuizButton
+              text={optionA}
+              state={getButtonState("a")}
+              onClick={() => selectAnswer("a")}
+            />
+            <QuizButton
+              text={optionB}
+              state={getButtonState("b")}
+              onClick={() => selectAnswer("b")}
+            />
+            <QuizButton
+              text={optionC}
+              state={getButtonState("c")}
+              onClick={() => selectAnswer("c")}
+            />
+            <QuizButton
+              text={optionD}
+              state={getButtonState("d")}
+              onClick={() => selectAnswer("d")}
+            />
+          </div>
         </div>
 
         {/* 🔵 Submit button */}
-        <div className="flex justify-center mt-10 w-full">
+        <div className="flex justify-center w-full">
           <SubmitButton
             text="Lock Answer"
             onClick={() => SubmitAnswer()}
@@ -318,5 +408,6 @@ export default function Play() {
 
       </div>
     </main>
+
   );
 }
