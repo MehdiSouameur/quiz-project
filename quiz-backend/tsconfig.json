@@ -8,7 +8,6 @@
     "target": "es2017",
     "outDir": "dist",
     "rootDir": "src",
-    "ignoreDeprecations": "6.0",
   },
   "include": ["src"]
 }
