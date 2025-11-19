@@ -6,16 +6,34 @@ import { useEffect, useState } from "react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
+export interface Option {
+  id: string;
+  text: string;
+}
+
+export interface Question {
+  id: number;
+  title: string;
+  options: Option[];
+  answer: string;
+}
+
+export interface Quiz {
+  quizId: string;
+  name: string;
+  description: string;
+  questions: Question[];
+}
 
 export default function Home() {
   const router = useRouter();
-  const [quizzes, setQuizzes] = useState<any[]>([]);
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/api/quiz/retrieve`);
-        const data = await res.json();
+        const data: Quiz[] = await res.json();
         setQuizzes(data);
         console.log("Quizzes retrieved:", data);
       } catch (err) {
