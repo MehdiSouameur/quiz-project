@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function AuthChecker({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -20,17 +22,19 @@ export default function AuthChecker({ children }: { children: React.ReactNode })
 
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/auth/check", {
+        const res = await fetch(`${API_BASE_URL}/api/auth/check`, {
           credentials: "include", // include cookies for auth
         });
 
         if (!res.ok) {
           router.push("/login");
+          console.log("RES NOT OK REROUTE")
           return;
         }
 
         const data = await res.json();
         if (!data.authenticated) {
+            console.log("Data NO AUTH REROUTE")
           router.push("/login");
         }
       } catch (err) {

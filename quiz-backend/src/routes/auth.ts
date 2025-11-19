@@ -32,16 +32,18 @@ router.post("/register", (req: Request, res: Response) =>  {
     const username = `guest-${randomNumber}`;
 
     // Optionally, set as cookie
+    const isProd = process.env.NODE_ENV === "production";
+
     res.cookie("token", newToken, {
-        httpOnly: false,
-        sameSite: "lax", // adjust for your frontend
-        secure: false, 
+    httpOnly: false,                 // or true if you don't need JS access
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,                  // must be true on HTTPS (Render)
     });
 
     res.cookie("username", username, {
-        httpOnly: false,
-        sameSite: "lax",
-        secure: false,
+    httpOnly: false,
+    sameSite: isProd ? "none" : "lax",
+    secure: isProd,
     });
 
     return res.json({ token: newToken });

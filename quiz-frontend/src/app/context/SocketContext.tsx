@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 interface SocketContextValue {
   socket: Socket | null;
   isConnecting: boolean;
@@ -35,7 +37,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
   async function register() {
     try {
-      const res = await fetch("http://localhost:3001/api/auth/register", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: "POST",
         credentials: "include",
       });
@@ -64,7 +66,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       setToken(tk);
 
       // 🔹 Step 2: Connect socket only AFTER user is registered
-      const s = io("http://localhost:3001/lobby", {
+      const s = io(`${API_BASE_URL}/lobby`, {
         auth: { token: tk }, // optional — passes auth token if you use it server-side
       });
 
