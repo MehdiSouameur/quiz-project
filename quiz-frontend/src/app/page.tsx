@@ -25,7 +25,7 @@ export interface Quiz {
   questions: Question[];
 }
 
-export default function Home() {
+export default function Page() {
   const router = useRouter();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
