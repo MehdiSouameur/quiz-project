@@ -14,7 +14,7 @@ async function register() {
       credentials: "include", // important! allows cookie to be set
     });
 
-      const data = await res.json();
+    const data = await res.json();
     const { token, username } = data;
 
     console.log("Registered, backend returned:", data);
