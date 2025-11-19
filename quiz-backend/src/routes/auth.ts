@@ -13,8 +13,13 @@ function generateAuth(): string {
 
 // Basic authentication check
 router.get("/check", (req: Request, res: Response) => {
-    const token = req.cookies?.token;
-    console.log(token);
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.startsWith("Bearer ")
+        ? authHeader.slice(7)
+        : undefined;
+
+    console.log("Auth check token:", token);
+
     if (!token || !validTokens.includes(token)) {
         return res.json({ authenticated: false });
     }

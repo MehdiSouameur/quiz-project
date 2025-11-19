@@ -6,6 +6,15 @@ import path from "path";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+function getCookie(name: string): string | null {
+    return (
+        document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(name + "="))
+        ?.split("=")[1] || null
+    );
+}
+
 export default function AuthChecker({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -29,8 +38,12 @@ export default function AuthChecker({ children }: { children: React.ReactNode })
 
     const checkAuth = async () => {
       try {
+        const token = getCookie("token");
+
         const res = await fetch(`${API_BASE_URL}/api/auth/check`, {
-          credentials: "include", // include cookies for auth
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
         });
 
         if (!res.ok) {

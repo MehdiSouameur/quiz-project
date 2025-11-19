@@ -58,8 +58,8 @@ export default function Lobby() {
     async function register() {
         try {
             const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
-            method: "POST",
-            credentials: "include", // important! allows cookie to be set
+                method: "POST",
+                credentials: "include", // important! allows cookie to be set
             });
 
             const data = await res.json();
@@ -68,12 +68,12 @@ export default function Lobby() {
             console.log("Registered, backend returned:", data);
 
             if (token) {
-            document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+                document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
             }
             if (username) {
-            document.cookie = `username=${encodeURIComponent(
-                username
-            )}; path=/; max-age=${60 * 60 * 24 * 7}`;
+                document.cookie = `username=${encodeURIComponent(
+                    username
+                )}; path=/; max-age=${60 * 60 * 24 * 7}`;
             }
             
         } catch (err) {
