@@ -12,10 +12,18 @@ import setupGameServer from "./sockets/play.js";
 import setupLobbyServer from "./sockets/lobby.js";
 
 const app = express();
+
+const allowedOrigins = [
+  "https://quiz-project-ruby.vercel.app",
+  "http://localhost:3000",
+];
+
+// CORS for REST API
 app.use(cors({
-  origin: true,
-  credentials: true,       
+  origin: allowedOrigins,
+  credentials: true,
 }));
+
 app.use(cookieParser());
 
 app.use(express.json());
