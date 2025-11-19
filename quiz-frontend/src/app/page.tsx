@@ -4,6 +4,9 @@ import QuizSelect from "./components/QuizSelect";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
+
+
 export default function Home() {
   const router = useRouter();
   const [quizzes, setQuizzes] = useState<any[]>([]);
@@ -11,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/quiz/retrieve");
+        const res = await fetch(`${API_BASE_URL}/api/quiz/retrieve`);
         const data = await res.json();
         setQuizzes(data);
         console.log("Quizzes retrieved:", data);

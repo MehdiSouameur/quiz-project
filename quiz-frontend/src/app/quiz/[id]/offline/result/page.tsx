@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
+
 interface Answer {
   questionId: number;
   selected: string;
@@ -32,7 +34,7 @@ export default function Result() {
 
     useEffect(() => {
         if (gameId) {
-        fetch(`http://localhost:3001/api/quiz/${id}/information?gameId=${gameId}`)
+        fetch(`${API_BASE_URL}/api/quiz/${id}/information?gameId=${gameId}`)
             .then((res) => res.json())
             .then((data: GameData) => {
             console.log("Game data:", data);

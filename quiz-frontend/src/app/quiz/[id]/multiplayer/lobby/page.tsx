@@ -4,7 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { io, Socket} from "socket.io-client";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Image from "next/image";
-import Quiz from "../../offline/page";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
 interface Option {
   id: string;
@@ -26,6 +27,19 @@ interface Quiz {
 }
 
 export default function Lobby() {
+
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = async () => {
+        try {
+        await navigator.clipboard.writeText(window.location.href);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+        console.error("Failed to copy link: ", err);
+        }
+    };
+
     const [username, setUsername] = useState("");
     const [quizName, setQuizName] = useState<string | null>(null);
     const [opponent, setOpponent] = useState<string | null>(null);
@@ -43,7 +57,7 @@ export default function Lobby() {
 
     async function register() {
         try {
-            const res = await fetch("http://localhost:3001/api/auth/register", {
+            const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
             method: "POST",
             credentials: "include", // important! allows cookie to be set
             });
@@ -91,7 +105,7 @@ export default function Lobby() {
             console.log("Username read: " + name)
             const params = new URLSearchParams(window.location.search);
             let roomParam = params.get("room");
-            const socket = io("http://localhost:3001/lobby", {
+            const socket = io(`${API_BASE_URL}/lobby`, {
                 auth: { token: token },
             });
             socketRef.current = socket;
@@ -190,7 +204,7 @@ export default function Lobby() {
                     socket.disconnect();
                     console.log("🔌 Disconnected from lobby namespace");
                 }
-                router.push(`/quiz/quiz-010/multiplayerV2/play?game=${roomId}`)
+                router.push(`/quiz/${quizId}/multiplayer/play?game=${roomId}`)
             });
 
         }
@@ -204,13 +218,26 @@ export default function Lobby() {
 
     return (
         <main className="flex flex-col min-h-screen justify-center items-center px-4 py-8 sm:px-6 sm:py-10">
-        <h1 className="text-white text-center font-black text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-10">
+        <h1 className="text-white text-center font-black text-2xl sm:text-3xl md:text-4xl mb-6 sm:mb-1">
             Game lobby
             <br />
             <span className="text-lg sm:text-2xl md:text-3xl font-semibold">
             {quizName} Quiz
             </span>
         </h1>
+
+        <div className="flex flex-row mb-4">
+            <div className="text-blue-400 text-sm md:text-base">
+                Share this link with a friend to get started:
+            </div>
+            <button
+                type="button"
+                className="text-xs ml-2 px-1 border rounded bg-blue-700 cursor-pointer"
+                onClick={handleCopy}
+            >
+                {copied ? "COPIED!" : "COPY LINK"}
+            </button>
+        </div>
 
         <div
             className="
@@ -290,7 +317,7 @@ export default function Lobby() {
                 flex items-center justify-center
                 px-4 py-2 sm:px-5 sm:py-3
                 rounded-xl text-white font-bold text-sm sm:text-base
-                transition-colors
+                transition-colors cursor-pointer
                 ${playerReady ? "bg-red-600 hover:bg-red-700" : "bg-lime-600 hover:bg-lime-700"}
                 ${opponent ? "opacity-100" : "opacity-0 pointer-events-none"}
             `}

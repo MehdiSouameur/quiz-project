@@ -6,6 +6,8 @@ import QuizButton from "../../../components/QuizButton";
 import { useRouter, useParams } from "next/navigation";
 import SubmitButton from "../../../components/SubmitButton";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
+
 interface Option {
   id: string | number;
   text: string;
@@ -51,7 +53,7 @@ export default function Quiz() {
 
   const startQuiz = async () => {
     console.log("starting quiz");
-    const res = await fetch("http://localhost:3001/api/quiz/start/" + quizId);
+    const res = await fetch(`${API_BASE_URL}/api/quiz/start/${quizId}`);
     const data = await res.json();
     setQuizData(data);
     router.push(`/quiz/${quizId}/offline?gameId=${data.gameId}`);
@@ -117,8 +119,8 @@ export default function Quiz() {
     }
 
     console.log("payload", { gameId: quizData?.gameId, questionId: quizData?.question.id, answer });
-    console.log("Posting...", `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/evaluate`);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quiz/evaluate`, {
+    console.log("Posting...", `${API_BASE_URL}/api/quiz/evaluate`);
+    const res = await fetch(`${API_BASE_URL}/api/quiz/evaluate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
