@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import path from "path";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 

@@ -198,7 +198,7 @@ export default function Play() {
             const gameParam = params.get("game") || "unknown";
 
             // ✅ redirect to results page with the game query
-            window.location.href = `${API_BASE_URL}/quiz/${quizId}/multiplayer/result?game=${gameParam}`;    
+            window.location.href = `/quiz/${quizId}/multiplayer/result?game=${gameParam}`;    
                     
           });
     }

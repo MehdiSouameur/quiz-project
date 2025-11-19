@@ -2,19 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
 
 
 type WinState = "victory" | "defeat" | "tie";
-
-interface GameFinishedPayload {
-  player: string;
-  player_score: number;
-  opponent: string;
-  opponent_score: number;
-  win_state: WinState;
-  quiz_title: string;
-}
 
 export default function Result() {
 

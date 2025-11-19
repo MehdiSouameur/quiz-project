@@ -2,29 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import { io, Socket} from "socket.io-client";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
-interface Option {
-  id: string;
-  text: string;
-}
-
-interface Question {
-  id: number;
-  title: string;
-  options: Option[];
-  answer: string;
-}
-
-interface Quiz {
-  quizId: string;
-  name: string;
-  description: string;
-  questions: Question[];
-}
 
 export default function Lobby() {
 
@@ -49,7 +31,6 @@ export default function Lobby() {
     const [countdown, setCountdown] = useState<number | null>(null);
     const socketRef = useRef<Socket | null>(null);
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     const pathname = usePathname(); 
     const parts = pathname.split("/"); 

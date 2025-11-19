@@ -8,15 +8,16 @@ import SubmitButton from "../../../components/SubmitButton";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
 
-interface Option {
-  id: string | number;
+export interface Option {
+  id: string;
   text: string;
 }
 
-interface Question {
+export interface Question {
   id: number;
   title: string;
   options: Option[];
+  answer: string;
 }
 
 interface QuizData {
@@ -26,6 +27,13 @@ interface QuizData {
   questions: Question[];
   score: number;
   isFinished: boolean;
+}
+
+export interface EvaluateResponse {
+  answer: string;
+  score: number;
+  gameId: string;
+  question: Question | null;
 }
 
 
@@ -42,7 +50,6 @@ export default function Quiz() {
   const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
   const [showResults, setShowResults] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(100); // percentage
   const totalTime = 20; // seconds
   const progressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const finishTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -65,7 +72,7 @@ export default function Quiz() {
       startQuiz();
       startCalledRef.current = true;
     }
-  }, []);
+  }, [startQuiz]);
 
   useEffect(() => {
     if (!quizData) return;
@@ -105,6 +112,7 @@ export default function Quiz() {
   if (!quizData) return <p>Loading...</p>;
 
 
+  
   const evaluateQuestion = async (auto = false) => {
     const answer = selectedAnswerRef.current;
     console.log("current answer is: " + answer)
@@ -133,7 +141,7 @@ export default function Quiz() {
     console.log("Received!");
 
 
-    const data = await res.json();
+    const data: EvaluateResponse = await res.json();
     setCorrectAnswer(data.answer);
     setShowResults(true);
 
@@ -149,7 +157,7 @@ export default function Quiz() {
   };
 
 
-  const goToNextQuestion = (data?: any) => {
+  const goToNextQuestion = (data: EvaluateResponse) => {
     // 1️⃣ Clear all timers
     if (progressTimeoutRef.current) clearTimeout(progressTimeoutRef.current);
     if (finishTimeoutRef.current) clearTimeout(finishTimeoutRef.current);
@@ -160,22 +168,28 @@ export default function Quiz() {
     setCorrectAnswer(null);
     setShowResults(false);
     selectedAnswerRef.current = null;
-    setTimeLeft(100); // reset progress bar
 
-    // 3️⃣ Update question last
-    if (data?.question) {
-      setQuizData((prev) => {
-        if (!prev) return prev;
-        return {
-          ...prev,
-          score: data?.score ?? prev.score,
-          question: data.question,
-        };
-      });
-    } else {
-      router.push(`/quiz/${id}/offline/result?gameId=${data.gameId}`); // game finished
+    // 3️⃣ If no next question → game finished
+    if (!data.question) {
+      router.push(`/quiz/${id}/offline/result?gameId=${data.gameId}`);
+      return;
     }
+
+    // 4️⃣ We have a next question → update state
+    setQuizData((prev: QuizData | null) => {
+      if (!prev) return prev;
+
+      const updated: QuizData = {
+        ...prev,
+        score: data.score ?? prev.score,
+        // data.question is definitely a Question here
+        question: data.question as Question,
+      };
+
+      return updated;
+    });
   };
+
 
 
 
