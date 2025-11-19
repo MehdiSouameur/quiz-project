@@ -24,6 +24,8 @@ app.use(express.json());
 app.use("/api/quiz", quizRoutes);
 app.use("/api/auth", authRoutes)
 
+const PORT = process.env.PORT || 3001;
+
 // Create HTTP server and attach Socket.IO
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -40,4 +42,4 @@ setupLobbyServer(io);
 setupGameServer(io);
 
 // Start server
-server.listen(3001, () => console.log("Quiz backend with WebSocket running on port 3001"));
+server.listen(PORT, () => console.log("Quiz backend with WebSocket running on port 3001"));

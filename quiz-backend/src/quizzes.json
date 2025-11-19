@@ -703,148 +703,941 @@
   },
   {
     "quizId": "quiz-007",
-    "name": "Propagation des Ondes",
-    "description": "Testez vos connaissances sur la propagation des ondes en physique (niveau lycée).",
+    "name": "World War II",
+    "description": "Test your knowledge of major events, leaders, and facts from World War II.",
     "questions": [
       {
         "id": 0,
-        "title": "Quelle est la vitesse de propagation des ondes sonores dans l'air à 20°C ?",
+        "title": "In which year did World War II begin?",
         "options": [
-          { "id": "a", "text": "340 m/s" },
-          { "id": "b", "text": "300 000 km/s" },
-          { "id": "c", "text": "1500 m/s" },
-          { "id": "d", "text": "1 m/s" }
+          { "id": "a", "text": "1935" },
+          { "id": "b", "text": "1939" },
+          { "id": "c", "text": "1941" },
+          { "id": "d", "text": "1945" }
         ],
-        "answer": "a"
+        "answer": "b"
       },
       {
         "id": 1,
-        "title": "Une onde a une fréquence de 500 Hz et se propage à 340 m/s. Quelle est sa longueur d'onde ?",
+        "title": "Which countries made up the Axis Powers at the start of the war?",
         "options": [
-          { "id": "a", "text": "0,68 m" },
-          { "id": "b", "text": "1,5 m" },
-          { "id": "c", "text": "170 m" },
-          { "id": "d", "text": "0,34 m" }
+          { "id": "a", "text": "Germany, Italy, Japan" },
+          { "id": "b", "text": "France, Britain, USA" },
+          { "id": "c", "text": "Soviet Union, China, UK" },
+          { "id": "d", "text": "Germany, UK, Italy" }
         ],
         "answer": "a"
       },
       {
         "id": 2,
-        "title": "Les ondes lumineuses sont de quel type ?",
+        "title": "Which event led the United States to enter World War II?",
         "options": [
-          { "id": "a", "text": "Mécaniques" },
-          { "id": "b", "text": "Électromagnétiques" },
-          { "id": "c", "text": "Sismiques" },
-          { "id": "d", "text": "Acoustiques" }
-        ],
-        "answer": "b"
-      },
-      {
-        "id": 3,
-        "title": "Quelle grandeur représente l'amplitude d'une onde ?",
-        "options": [
-          { "id": "a", "text": "La distance entre deux crêtes" },
-          { "id": "b", "text": "La vitesse de propagation" },
-          { "id": "c", "text": "La hauteur maximale de l'onde" },
-          { "id": "d", "text": "La fréquence" }
+          { "id": "a", "text": "Battle of Britain" },
+          { "id": "b", "text": "Invasion of Poland" },
+          { "id": "c", "text": "Attack on Pearl Harbor" },
+          { "id": "d", "text": "D-Day landings" }
         ],
         "answer": "c"
       },
       {
-        "id": 4,
-        "title": "Une onde a une longueur d'onde de 0,5 m et une vitesse de 340 m/s. Quelle est sa fréquence ?",
+        "id": 3,
+        "title": "Which leader served as Prime Minister of the United Kingdom for most of the war?",
         "options": [
-          { "id": "a", "text": "170 Hz" },
-          { "id": "b", "text": "680 Hz" },
-          { "id": "c", "text": "340 Hz" },
-          { "id": "d", "text": "500 Hz" }
+          { "id": "a", "text": "Neville Chamberlain" },
+          { "id": "b", "text": "Winston Churchill" },
+          { "id": "c", "text": "Clement Attlee" },
+          { "id": "d", "text": "Harold Macmillan" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "What was the codename for the Allied invasion of Normandy in 1944?",
+        "options": [
+          { "id": "a", "text": "Operation Torch" },
+          { "id": "b", "text": "Operation Overlord" },
+          { "id": "c", "text": "Operation Sea Lion" },
+          { "id": "d", "text": "Operation Barbarossa" }
         ],
         "answer": "b"
       },
       {
         "id": 5,
-        "title": "Les ondes sonores sont transmises par quel type de milieu ?",
+        "title": "Which battle is considered the turning point on the Eastern Front?",
         "options": [
-          { "id": "a", "text": "Vide" },
-          { "id": "b", "text": "Matière (solide, liquide, gaz)" },
-          { "id": "c", "text": "Rayonnement électromagnétique" },
-          { "id": "d", "text": "Aucun" }
+          { "id": "a", "text": "Battle of Stalingrad" },
+          { "id": "b", "text": "Battle of Berlin" },
+          { "id": "c", "text": "Battle of Kursk" },
+          { "id": "d", "text": "Battle of Moscow" }
         ],
-        "answer": "b"
+        "answer": "a"
       },
       {
         "id": 6,
-        "title": "Lorsqu'une onde rencontre un obstacle et change de direction, on parle de :",
+        "title": "Which country was invaded first by Germany in 1939?",
         "options": [
-          { "id": "a", "text": "Réflexion" },
-          { "id": "b", "text": "Diffraction" },
-          { "id": "c", "text": "Interférence" },
-          { "id": "d", "text": "Réfraction" }
+          { "id": "a", "text": "Czechoslovakia" },
+          { "id": "b", "text": "France" },
+          { "id": "c", "text": "Poland" },
+          { "id": "d", "text": "Belgium" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 7,
+        "title": "What was the name of the German air force during World War II?",
+        "options": [
+          { "id": "a", "text": "Wehrmacht" },
+          { "id": "b", "text": "Kriegsmarine" },
+          { "id": "c", "text": "Gestapo" },
+          { "id": "d", "text": "Luftwaffe" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 8,
+        "title": "Which conference in 1945 planned the postwar reorganization of Europe?",
+        "options": [
+          { "id": "a", "text": "Munich Conference" },
+          { "id": "b", "text": "Yalta Conference" },
+          { "id": "c", "text": "Geneva Conference" },
+          { "id": "d", "text": "Potsdam Conference" }
         ],
         "answer": "b"
       },
       {
-        "id": 7,
-        "title": "Une onde sonore met 2 s pour parcourir 680 m. Quelle est sa vitesse ?",
+        "id": 9,
+        "title": "Which cities were hit by atomic bombs in 1945?",
         "options": [
-          { "id": "a", "text": "340 m/s" },
-          { "id": "b", "text": "1360 m/s" },
-          { "id": "c", "text": "170 m/s" },
-          { "id": "d", "text": "680 m/s" }
+          { "id": "a", "text": "Tokyo and Osaka" },
+          { "id": "b", "text": "Nagasaki and Kyoto" },
+          { "id": "c", "text": "Hiroshima and Nagasaki" },
+          { "id": "d", "text": "Hiroshima and Tokyo" }
+        ],
+        "answer": "c"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-008",
+    "name": "Computer Science",
+    "description": "Test your knowledge of fundamental computer science concepts, history, and terminology.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "What does CPU stand for?",
+        "options": [
+          { "id": "a", "text": "Central Processing Unit" },
+          { "id": "b", "text": "Computer Power Utility" },
+          { "id": "c", "text": "Central Performance Unit" },
+          { "id": "d", "text": "Control Processing Utility" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 1,
+        "title": "Which data structure uses the First-In, First-Out (FIFO) principle?",
+        "options": [
+          { "id": "a", "text": "Stack" },
+          { "id": "b", "text": "Queue" },
+          { "id": "c", "text": "Tree" },
+          { "id": "d", "text": "Graph" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Which of the following is a non-volatile type of memory?",
+        "options": [
+          { "id": "a", "text": "RAM" },
+          { "id": "b", "text": "Cache" },
+          { "id": "c", "text": "ROM" },
+          { "id": "d", "text": "Registers" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "Who is known as the father of computer science?",
+        "options": [
+          { "id": "a", "text": "Bill Gates" },
+          { "id": "b", "text": "Alan Turing" },
+          { "id": "c", "text": "Charles Babbage" },
+          { "id": "d", "text": "John von Neumann" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "What does HTML primarily define?",
+        "options": [
+          { "id": "a", "text": "Page structure" },
+          { "id": "b", "text": "Database queries" },
+          { "id": "c", "text": "Network protocols" },
+          { "id": "d", "text": "Image compression" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 5,
+        "title": "Which of these sorting algorithms has the best average-case time complexity?",
+        "options": [
+          { "id": "a", "text": "Bubble Sort" },
+          { "id": "b", "text": "Selection Sort" },
+          { "id": "c", "text": "Merge Sort" },
+          { "id": "d", "text": "Insertion Sort" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 6,
+        "title": "Which number system uses only 0 and 1?",
+        "options": [
+          { "id": "a", "text": "Decimal" },
+          { "id": "b", "text": "Octal" },
+          { "id": "c", "text": "Binary" },
+          { "id": "d", "text": "Hexadecimal" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 7,
+        "title": "Which programming language is mainly used for statistical computing?",
+            "options": [
+          { "id": "a", "text": "R" },
+          { "id": "b", "text": "C++" },
+          { "id": "c", "text": "Java" },
+          { "id": "d", "text": "Ruby" }
         ],
         "answer": "a"
       },
       {
         "id": 8,
-        "title": "Comment s'appelle la distance entre deux crêtes successives ?",
+        "title": "What does ‘O’ represent in Big-O notation?",
         "options": [
-          { "id": "a", "text": "Longueur d'onde" },
-          { "id": "b", "text": "Amplitude" },
-          { "id": "c", "text": "Fréquence" },
-          { "id": "d", "text": "Période" }
+          { "id": "a", "text": "Order of complexity" },
+          { "id": "b", "text": "Optimization level" },
+          { "id": "c", "text": "Operational count" },
+          { "id": "d", "text": "Output amount" }
         ],
         "answer": "a"
       },
       {
         "id": 9,
-        "title": "La fréquence d'une onde sonore influence :",
+        "title": "Which device converts digital signals into analog signals for transmission?",
         "options": [
-          { "id": "a", "text": "Le volume" },
-          { "id": "b", "text": "La hauteur (tonalité)" },
-          { "id": "c", "text": "La vitesse" },
-          { "id": "d", "text": "La longueur d'onde uniquement" }
+          { "id": "a", "text": "Router" },
+          { "id": "b", "text": "Modem" },
+          { "id": "c", "text": "Switch" },
+          { "id": "d", "text": "Repeater" }
         ],
         "answer": "b"
       }
     ]
   },
   {
-    "quizId": "quiz-010",
-    "name": "General Knowledge",
-    "description": "A diverse quiz testing your knowledge on various topics.",
+    "quizId": "quiz-009",
+    "name": "80s Pop Legends",
+    "description": "Test your knowledge of the biggest pop icons and hit-makers of the 1980s.",
     "questions": [
       {
         "id": 0,
-        "title": "What is the capital of France?",
+        "title": "Which Michael Jackson album became the best-selling album of all time?",
         "options": [
-          { "id": "a", "text": "Berlin" },
-          { "id": "b", "text": "Madrid" },
-          { "id": "c", "text": "Paris" },
-          { "id": "d", "text": "Rome" }
+          { "id": "a", "text": "Bad" },
+          { "id": "b", "text": "Thriller" },
+          { "id": "c", "text": "Off the Wall" },
+          { "id": "d", "text": "Dangerous" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 1,
+        "title": "Which Swedish group is known for hits like 'Dancing Queen' and 'Take a Chance on Me'?",
+        "options": [
+          { "id": "a", "text": "Roxette" },
+          { "id": "b", "text": "ABBA" },
+          { "id": "c", "text": "Ace of Base" },
+          { "id": "d", "text": "A-ha" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Which Prince song features the iconic lyric 'You don't have to be rich to be my girl'?",
+        "options": [
+          { "id": "a", "text": "Kiss" },
+          { "id": "b", "text": "Purple Rain" },
+          { "id": "c", "text": "1999" },
+          { "id": "d", "text": "When Doves Cry" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 3,
+        "title": "Which artist is known for the 80s hits 'Like a Virgin' and 'Material Girl'?",
+        "options": [
+          { "id": "a", "text": "Cyndi Lauper" },
+          { "id": "b", "text": "Tina Turner" },
+          { "id": "c", "text": "Madonna" },
+          { "id": "d", "text": "Whitney Houston" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 4,
+        "title": "Which band released the hit 'Another One Bites the Dust' in 1980?",
+        "options": [
+          { "id": "a", "text": "Queen" },
+          { "id": "b", "text": "Wham!" },
+          { "id": "c", "text": "Duran Duran" },
+          { "id": "d", "text": "Eurythmics" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 5,
+        "title": "Which singer had a huge 80s hit with 'I Wanna Dance with Somebody'?",
+        "options": [
+          { "id": "a", "text": "Janet Jackson" },
+          { "id": "b", "text": "Whitney Houston" },
+          { "id": "c", "text": "Tina Turner" },
+          { "id": "d", "text": "Cyndi Lauper" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "Which duo performed the hit 'Wake Me Up Before You Go-Go'?",
+        "options": [
+          { "id": "a", "text": "Hall & Oates" },
+          { "id": "b", "text": "Wham!" },
+          { "id": "c", "text": "Eurythmics" },
+          { "id": "d", "text": "Pet Shop Boys" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "Which Cyndi Lauper song became an anthem for female empowerment?",
+        "options": [
+          { "id": "a", "text": "Time After Time" },
+          { "id": "b", "text": "Girls Just Want to Have Fun" },
+          { "id": "c", "text": "True Colors" },
+          { "id": "d", "text": "She Bop" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 8,
+        "title": "Phil Collins was the drummer and lead vocalist for which band during the 80s?",
+        "options": [
+          { "id": "a", "text": "Toto" },
+          { "id": "b", "text": "Genesis" },
+          { "id": "c", "text": "Dire Straits" },
+          { "id": "d", "text": "The Police" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "Which artist is famous for the hit 'Take On Me' and its iconic animated music video?",
+        "options": [
+          { "id": "a", "text": "A-ha" },
+          { "id": "b", "text": "Rick Astley" },
+          { "id": "c", "text": "Tears for Fears" },
+          { "id": "d", "text": "Simple Minds" }
+        ],
+        "answer": "a"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-010",
+    "name": "Human Anatomy",
+    "description": "Test your knowledge of the structure and function of the human body.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "What is the largest organ in the human body?",
+        "options": [
+          { "id": "a", "text": "Liver" },
+          { "id": "b", "text": "Skin" },
+          { "id": "c", "text": "Heart" },
+          { "id": "d", "text": "Lungs" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 1,
+        "title": "What is the main function of red blood cells?",
+        "options": [
+          { "id": "a", "text": "Fight infection" },
+          { "id": "b", "text": "Clot blood" },
+          { "id": "c", "text": "Carry oxygen" },
+          { "id": "d", "text": "Digest food" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 2,
+        "title": "Which bone is commonly known as the collarbone?",
+        "options": [
+          { "id": "a", "text": "Femur" },
+          { "id": "b", "text": "Tibia" },
+          { "id": "c", "text": "Clavicle" },
+          { "id": "d", "text": "Humerus" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "Which organ is responsible for filtering blood and producing urine?",
+        "options": [
+          { "id": "a", "text": "Liver" },
+          { "id": "b", "text": "Kidneys" },
+          { "id": "c", "text": "Pancreas" },
+          { "id": "d", "text": "Stomach" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "What type of joint is the shoulder joint?",
+        "options": [
+          { "id": "a", "text": "Hinge joint" },
+          { "id": "b", "text": "Ball-and-socket joint" },
+          { "id": "c", "text": "Pivot joint" },
+          { "id": "d", "text": "Gliding joint" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 5,
+        "title": "Which part of the brain controls balance and coordination?",
+        "options": [
+          { "id": "a", "text": "Cerebrum" },
+          { "id": "b", "text": "Brainstem" },
+          { "id": "c", "text": "Cerebellum" },
+          { "id": "d", "text": "Hypothalamus" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 6,
+        "title": "Which muscle is primarily responsible for breathing?",
+        "options": [
+          { "id": "a", "text": "Biceps" },
+          { "id": "b", "text": "Quadriceps" },
+          { "id": "c", "text": "Diaphragm" },
+          { "id": "d", "text": "Pectorals" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 7,
+        "title": "How many chambers does the human heart have?",
+        "options": [
+          { "id": "a", "text": "2" },
+          { "id": "b", "text": "3" },
+          { "id": "c", "text": "4" },
+          { "id": "d", "text": "5" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 8,
+        "title": "What is the longest bone in the human body?",
+        "options": [
+          { "id": "a", "text": "Humerus" },
+          { "id": "b", "text": "Femur" },
+          { "id": "c", "text": "Fibula" },
+          { "id": "d", "text": "Radius" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "Which organ produces insulin?",
+        "options": [
+          { "id": "a", "text": "Pancreas" },
+          { "id": "b", "text": "Thyroid" },
+          { "id": "c", "text": "Gallbladder" },
+          { "id": "d", "text": "Spleen" }
+        ],
+        "answer": "a"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-011",
+    "name": "Football",
+    "description": "Test your knowledge of football players, teams, and major tournaments.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Which country won the 2018 FIFA World Cup?",
+        "options": [
+          { "id": "a", "text": "Germany" },
+          { "id": "b", "text": "France" },
+          { "id": "c", "text": "Brazil" },
+          { "id": "d", "text": "Argentina" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 1,
+        "title": "Which player is known as 'The King of Football'?",
+        "options": [
+          { "id": "a", "text": "Maradona" },
+          { "id": "b", "text": "Pelé" },
+          { "id": "c", "text": "Johan Cruyff" },
+          { "id": "d", "text": "Zidane" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Which club has won the most UEFA Champions League titles?",
+        "options": [
+          { "id": "a", "text": "Liverpool" },
+          { "id": "b", "text": "Bayern Munich" },
+          { "id": "c", "text": "Real Madrid" },
+          { "id": "d", "text": "AC Milan" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "Which country hosted the 2006 FIFA World Cup?",
+        "options": [
+          { "id": "a", "text": "Italy" },
+          { "id": "b", "text": "Germany" },
+          { "id": "c", "text": "Portugal" },
+          { "id": "d", "text": "South Africa" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "Which Argentine player is famous for the 'Hand of God' goal?",
+        "options": [
+          { "id": "a", "text": "Lionel Messi" },
+          { "id": "b", "text": "Diego Maradona" },
+          { "id": "c", "text": "Carlos Tevez" },
+          { "id": "d", "text": "Gabriel Batistuta" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 5,
+        "title": "Which club did Cristiano Ronaldo join after leaving Manchester United in 2009?",
+        "options": [
+          { "id": "a", "text": "Juventus" },
+          { "id": "b", "text": "Real Madrid" },
+          { "id": "c", "text": "Sporting CP" },
+          { "id": "d", "text": "PSG" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "Which country has won the most FIFA World Cup titles?",
+        "options": [
+          { "id": "a", "text": "Germany" },
+          { "id": "b", "text": "Italy" },
+          { "id": "c", "text": "Argentina" },
+          { "id": "d", "text": "Brazil" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 7,
+        "title": "Which English club is known as 'The Red Devils'?",
+        "options": [
+          { "id": "a", "text": "Arsenal" },
+          { "id": "b", "text": "Manchester United" },
+          { "id": "c", "text": "Liverpool" },
+          { "id": "d", "text": "Chelsea" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 8,
+        "title": "Which player has won the most Ballon d'Or awards?",
+        "options": [
+          { "id": "a", "text": "Cristiano Ronaldo" },
+          { "id": "b", "text": "Ronaldinho" },
+          { "id": "c", "text": "Lionel Messi" },
+          { "id": "d", "text": "Michel Platini" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 9,
+        "title": "Which country won the first ever FIFA World Cup in 1930?",
+        "options": [
+          { "id": "a", "text": "Uruguay" },
+          { "id": "b", "text": "Argentina" },
+          { "id": "c", "text": "Italy" },
+          { "id": "d", "text": "France" }
+        ],
+        "answer": "a"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-012",
+    "name": "NBA",
+    "description": "Test your knowledge of NBA teams, players, records, and history.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Which player is known as 'His Airness'?",
+        "options": [
+          { "id": "a", "text": "Kobe Bryant" },
+          { "id": "b", "text": "LeBron James" },
+          { "id": "c", "text": "Michael Jordan" },
+          { "id": "d", "text": "Magic Johnson" }
         ],
         "answer": "c"
       },
       {
         "id": 1,
-        "title": "Who wrote '1984'?",
+        "title": "Which team has won the most NBA championships?",
         "options": [
-          { "id": "a", "text": "George Orwell" },
-          { "id": "b", "text": "Aldous Huxley" },
-          { "id": "c", "text": "J.K. Rowling" },
-          { "id": "d", "text": "Ernest Hemingway" }
+          { "id": "a", "text": "Los Angeles Lakers" },
+          { "id": "b", "text": "Chicago Bulls" },
+          { "id": "c", "text": "Boston Celtics" },
+          { "id": "d", "text": "Golden State Warriors" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 2,
+        "title": "Who holds the NBA record for the most points scored in a single game?",
+        "options": [
+          { "id": "a", "text": "Wilt Chamberlain" },
+          { "id": "b", "text": "Kareem Abdul-Jabbar" },
+          { "id": "c", "text": "Michael Jordan" },
+          { "id": "d", "text": "Kobe Bryant" }
         ],
         "answer": "a"
+      },
+      {
+        "id": 3,
+        "title": "Which player is famous for the 'Skyhook' shot?",
+        "options": [
+          { "id": "a", "text": "Shaquille O'Neal" },
+          { "id": "b", "text": "Kareem Abdul-Jabbar" },
+          { "id": "c", "text": "Tim Duncan" },
+          { "id": "d", "text": "Hakeem Olajuwon" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "Which team drafted Stephen Curry in 2009?",
+        "options": [
+          { "id": "a", "text": "Golden State Warriors" },
+          { "id": "b", "text": "Charlotte Hornets" },
+          { "id": "c", "text": "New York Knicks" },
+          { "id": "d", "text": "Phoenix Suns" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 5,
+        "title": "Which franchise is known as 'Lob City' during the 2010s?",
+        "options": [
+          { "id": "a", "text": "Houston Rockets" },
+          { "id": "b", "text": "Los Angeles Clippers" },
+          { "id": "c", "text": "Oklahoma City Thunder" },
+          { "id": "d", "text": "Miami Heat" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "Which coach led the Chicago Bulls to six NBA championships?",
+        "options": [
+          { "id": "a", "text": "Gregg Popovich" },
+          { "id": "b", "text": "Phil Jackson" },
+          { "id": "c", "text": "Pat Riley" },
+          { "id": "d", "text": "Steve Kerr" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "What team did LeBron James join in 2010, forming the 'Big Three'?",
+        "options": [
+          { "id": "a", "text": "Cleveland Cavaliers" },
+          { "id": "b", "text": "Los Angeles Lakers" },
+          { "id": "c", "text": "Miami Heat" },
+          { "id": "d", "text": "San Antonio Spurs" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 8,
+        "title": "Which team went 73–9 in the 2015–16 season, the best regular-season record in NBA history?",
+        "options": [
+          { "id": "a", "text": "Chicago Bulls" },
+          { "id": "b", "text": "San Antonio Spurs" },
+          { "id": "c", "text": "Golden State Warriors" },
+          { "id": "d", "text": "Dallas Mavericks" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 9,
+        "title": "Which player won the NBA MVP award unanimously in 2016?",
+        "options": [
+          { "id": "a", "text": "LeBron James" },
+          { "id": "b", "text": "Kevin Durant" },
+          { "id": "c", "text": "Stephen Curry" },
+          { "id": "d", "text": "Russell Westbrook" }
+        ],
+        "answer": "c"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-013",
+    "name": "Harry Potter",
+    "description": "Test your knowledge of characters, spells, and events from the Harry Potter series.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "What house is Harry Potter sorted into?",
+        "options": [
+          { "id": "a", "text": "Slytherin" },
+          { "id": "b", "text": "Hufflepuff" },
+          { "id": "c", "text": "Gryffindor" },
+          { "id": "d", "text": "Ravenclaw" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 1,
+        "title": "What is the name of Harry's pet owl?",
+        "options": [
+          { "id": "a", "text": "Errol" },
+          { "id": "b", "text": "Hedwig" },
+          { "id": "c", "text": "Pigwidgeon" },
+          { "id": "d", "text": "Crookshanks" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 2,
+        "title": "Who is the Headmaster of Hogwarts for most of the series?",
+        "options": [
+          { "id": "a", "text": "Severus Snape" },
+          { "id": "b", "text": "Minerva McGonagall" },
+          { "id": "c", "text": "Albus Dumbledore" },
+          { "id": "d", "text": "Horace Slughorn" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "What is the name of the magical newspaper in the wizarding world?",
+        "options": [
+          { "id": "a", "text": "The Wizard Weekly" },
+          { "id": "b", "text": "The Daily Prophet" },
+          { "id": "c", "text": "The Hogwarts Herald" },
+          { "id": "d", "text": "The Enchanted Times" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 4,
+        "title": "Which spell is used to disarm an opponent?",
+        "options": [
+          { "id": "a", "text": "Stupefy" },
+          { "id": "b", "text": "Expelliarmus" },
+          { "id": "c", "text": "Lumos" },
+          { "id": "d", "text": "Alohomora" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 5,
+        "title": "What position does Harry play on the Gryffindor Quidditch team?",
+        "options": [
+          { "id": "a", "text": "Keeper" },
+          { "id": "b", "text": "Beater" },
+          { "id": "c", "text": "Chaser" },
+          { "id": "d", "text": "Seeker" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 6,
+        "title": "Who is the Potions Master during Harry’s first year at Hogwarts?",
+        "options": [
+          { "id": "a", "text": "Horace Slughorn" },
+          { "id": "b", "text": "Severus Snape" },
+          { "id": "c", "text": "Remus Lupin" },
+          { "id": "d", "text": "Gilderoy Lockhart" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 7,
+        "title": "What creature is Aragog?",
+        "options": [
+          { "id": "a", "text": "Hippogriff" },
+          { "id": "b", "text": "Thestral" },
+          { "id": "c", "text": "Basilisk" },
+          { "id": "d", "text": "Acromantula" }
+        ],
+        "answer": "d"
+      },
+      {
+        "id": 8,
+        "title": "What is the name of the bank run by goblins?",
+        "options": [
+          { "id": "a", "text": "Galleon Keep" },
+          { "id": "b", "text": "Wizard Savings" },
+          { "id": "c", "text": "Gringotts" },
+          { "id": "d", "text": "Hogsmeade Bank" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 9,
+        "title": "Who kills Voldemort’s snake Nagini in the final battle?",
+        "options": [
+          { "id": "a", "text": "Harry Potter" },
+          { "id": "b", "text": "Neville Longbottom" },
+          { "id": "c", "text": "Ron Weasley" },
+          { "id": "d", "text": "Hermione Granger" }
+        ],
+        "answer": "b"
+      }
+    ]
+  },
+  {
+    "quizId": "quiz-014",
+    "name": "Lord of the Rings",
+    "description": "Test your knowledge of characters, locations, and events from The Lord of the Rings.",
+    "questions": [
+      {
+        "id": 0,
+        "title": "Who is the author of The Lord of the Rings?",
+        "options": [
+          { "id": "a", "text": "George R.R. Martin" },
+          { "id": "b", "text": "C.S. Lewis" },
+          { "id": "c", "text": "J.R.R. Tolkien" },
+          { "id": "d", "text": "Philip Pullman" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 1,
+        "title": "What is the name of Frodo’s loyal friend who accompanies him to Mordor?",
+        "options": [
+          { "id": "a", "text": "Merry" },
+          { "id": "b", "text": "Pippin" },
+          { "id": "c", "text": "Sam" },
+          { "id": "d", "text": "Boromir" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 2,
+        "title": "What creature is Gollum originally?",
+        "options": [
+          { "id": "a", "text": "Elf" },
+          { "id": "b", "text": "Dwarf" },
+          { "id": "c", "text": "Hobbit-like being" },
+          { "id": "d", "text": "Orc" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 3,
+        "title": "What is the name of the powerful wizard who leads the White Council?",
+        "options": [
+          { "id": "a", "text": "Saruman" },
+          { "id": "b", "text": "Radagast" },
+          { "id": "c", "text": "Gandalf" },
+          { "id": "d", "text": "Elrond" }
+        ],
+        "answer": "a"
+      },
+      {
+        "id": 4,
+        "title": "What is the name of Aragorn’s sword after it is reforged?",
+        "options": [
+          { "id": "a", "text": "Glamdring" },
+          { "id": "b", "text": "Sting" },
+          { "id": "c", "text": "Andúril" },
+          { "id": "d", "text": "Narsil" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 5,
+        "title": "Which realm is Legolas the prince of?",
+        "options": [
+          { "id": "a", "text": "Rivendell" },
+          { "id": "b", "text": "Mirkwood" },
+          { "id": "c", "text": "Lothlórien" },
+          { "id": "d", "text": "Gondor" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 6,
+        "title": "Who destroys the One Ring?",
+        "options": [
+          { "id": "a", "text": "Frodo Baggins" },
+          { "id": "b", "text": "Gandalf" },
+          { "id": "c", "text": "Gollum" },
+          { "id": "d", "text": "Samwise Gamgee" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 7,
+        "title": "What fortress is the setting for the Battle of Helm’s Deep?",
+        "options": [
+          { "id": "a", "text": "Minas Tirith" },
+          { "id": "b", "text": "Isengard" },
+          { "id": "c", "text": "Helm's Deep" },
+          { "id": "d", "text": "Moria" }
+        ],
+        "answer": "c"
+      },
+      {
+        "id": 8,
+        "title": "What is the name of the giant spider that attacks Frodo?",
+        "options": [
+          { "id": "a", "text": "Shadowfax" },
+          { "id": "b", "text": "Shelob" },
+          { "id": "c", "text": "Ungoliant" },
+          { "id": "d", "text": "Sméagol" }
+        ],
+        "answer": "b"
+      },
+      {
+        "id": 9,
+        "title": "Who becomes the King of Gondor at the end of the story?",
+        "options": [
+          { "id": "a", "text": "Boromir" },
+          { "id": "b", "text": "Faramir" },
+          { "id": "c", "text": "Aragorn" },
+          { "id": "d", "text": "Théoden" }
+        ],
+        "answer": "c"
       }
     ]
   }
+
+
+  
 ]
