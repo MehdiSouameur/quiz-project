@@ -1,3 +1,5 @@
+"use client";
+
 import type { Metadata } from "next";
 import AuthChecker from "./components/AuthChecker";
 import "./globals.css";
@@ -8,6 +10,7 @@ export const metadata: Metadata = {
   description: "Fun quiz action",
 };
 
+export const dynamic = "force-dynamic";
 
 export default function RootLayout({
   children,
