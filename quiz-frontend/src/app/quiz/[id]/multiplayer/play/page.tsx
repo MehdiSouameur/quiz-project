@@ -48,7 +48,7 @@ export default function Play() {
           const token = getCookie("token");
           const name = getCookie("username");
           const params = new URLSearchParams(window.location.search);
-          let gameParam = params.get("game");
+          const gameParam = params.get("game");
 
           // ERROR CHECKING
           if(!token){
@@ -297,7 +297,7 @@ export default function Play() {
     }
 
     setIsLocked(true);
-    let token = getCookie("token");
+    const token = getCookie("token");
     socket.emit("submit_answer", {selectedAnswer, token});
   }
 

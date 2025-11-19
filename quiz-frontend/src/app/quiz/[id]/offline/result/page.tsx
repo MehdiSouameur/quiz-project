@@ -12,11 +12,23 @@ interface Answer {
   correct: boolean;
 }
 
+export interface Option {
+  id: string;
+  text: string;
+}
+
+export interface Question {
+  id: number;
+  title: string;
+  options: Option[];
+  answer: string;
+}
+
 interface GameData {
   gameId: string;
   quizId: string;
   currentQuestionIndex: number;
-  questions: any[]; // you can define a Question type later if needed
+  questions: Question[]; 
   answers: Answer[];
   score: number;
   isFinished: boolean;
