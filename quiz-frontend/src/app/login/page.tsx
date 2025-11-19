@@ -14,11 +14,22 @@ async function register() {
       credentials: "include", // important! allows cookie to be set
     });
 
-    const data = await res.json();
+      const data = await res.json();
+    const { token, username } = data;
+
     console.log("Registered, backend returned:", data);
+
+    if (token) {
+      document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+    }
+    if (username) {
+      document.cookie = `username=${encodeURIComponent(
+        username
+      )}; path=/; max-age=${60 * 60 * 24 * 7}`;
+    }
+
     router.push("/");
-    // The cookie is automatically set in the browser via Set-Cookie
-    // You don’t need to do anything else
+
   } catch (err) {
     console.error("Registration failed:", err);
   }

@@ -31,7 +31,7 @@ router.post("/register", (req: Request, res: Response) =>  {
     const randomNumber = Math.floor(100 + Math.random() * 900); // 100–999
     const username = `guest-${randomNumber}`;
 
-    // Optionally, set as cookie
+    /* Optionally, set as cookie
     const isProd = process.env.NODE_ENV === "production";
 
     res.cookie("token", newToken, {
@@ -45,8 +45,9 @@ router.post("/register", (req: Request, res: Response) =>  {
     sameSite: isProd ? "none" : "lax",
     secure: isProd,
     });
+    */
 
-    return res.json({ token: newToken });
+    return res.json({ token: newToken, username });
 });
 
 export default router;

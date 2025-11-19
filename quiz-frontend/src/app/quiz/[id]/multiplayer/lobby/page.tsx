@@ -63,9 +63,19 @@ export default function Lobby() {
             });
 
             const data = await res.json();
+            const { token, username } = data;
+
             console.log("Registered, backend returned:", data);
-            // The cookie is automatically set in the browser via Set-Cookie
-            // You don’t need to do anything else
+
+            if (token) {
+            document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
+            }
+            if (username) {
+            document.cookie = `username=${encodeURIComponent(
+                username
+            )}; path=/; max-age=${60 * 60 * 24 * 7}`;
+            }
+            
         } catch (err) {
             console.error("Registration failed:", err);
         }
@@ -99,6 +109,9 @@ export default function Lobby() {
                 await register();
                 name = getCookie("username");
                 token = getCookie("token");
+
+                console.log("Username registered: " + name)
+                console.log("Token registered: " + token)
             }
 
             setUsername(name ?? "");

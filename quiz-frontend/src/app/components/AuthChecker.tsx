@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import path from "path";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -10,13 +11,19 @@ export default function AuthChecker({ children }: { children: React.ReactNode })
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("Authenticating");
+    if (!pathname) return; // nothing to do until we know the path
+
+    console.log("Authenticating, pathname:", pathname);
+
     // Exclude /login and any /quiz/:id/multiplayer route
     if (
       pathname === "/login" ||
-      /^\/quiz\/[^/]+\/multiplayer$/.test(pathname) ||
+      /^\/quiz\/[^/]+\/multiplayer(\/.*)?$/.test(pathname) ||
       /^\/quiz\/[^/]+\/multiplayerV2(\/.*)?$/.test(pathname)
-    ) return;
+    ) {
+      console.log("ignore auth for multi");
+      return;
+    }
 
 
 
