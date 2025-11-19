@@ -6,7 +6,8 @@
     "moduleResolution": "node",
     "strict": true,
     "target": "es2017",
-    "outDir": "./dist",
+    "outDir": "dist",
+    "rootDir": "src",
     "ignoreDeprecations": "6.0",
   },
   "include": ["src"]
