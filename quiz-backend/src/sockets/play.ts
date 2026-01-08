@@ -86,7 +86,7 @@ export default function setupGameServer(io: Server) {
 
         CurGame.round.answeredPlayers = new Set();
 
-        const ROUND_TIME = 10000;
+        const ROUND_TIME = 1000000000;
 
         CurGame.round.timeoutId = setTimeout(() => {
             console.log("⏰ Round timed out");
