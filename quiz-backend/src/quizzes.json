@@ -1636,7 +1636,166 @@
         "answer": "c"
       }
     ]
-  }
+  },
+  {
+  "quizId": "quiz-016",
+  "name": "Transition écologique",
+  "description": "QCM sur la biodiversité, le climat, l’énergie et les enjeux de la transition écologique.",
+  "questions": [
+    {
+      "id": 0,
+      "title": "La biodiversité correspond à :",
+      "options": [
+        { "id": "a", "text": "La diversité des animaux uniquement" },
+        { "id": "b", "text": "La diversité de toutes les formes du vivant à différents niveaux" },
+        { "id": "c", "text": "La diversité des écosystèmes uniquement" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 1,
+      "title": "Combien de niveaux de biodiversité distingue-t-on classiquement ?",
+      "options": [
+        { "id": "a", "text": "Deux" },
+        { "id": "b", "text": "Trois" },
+        { "id": "c", "text": "Cinq" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 2,
+      "title": "La diversité génétique au sein d’une espèce provient principalement :",
+      "options": [
+        { "id": "a", "text": "Des migrations" },
+        { "id": "b", "text": "De l’apprentissage" },
+        { "id": "c", "text": "Des mutations génétiques" }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": 3,
+      "title": "Un écosystème est défini comme :",
+      "options": [
+        { "id": "a", "text": "Un ensemble d’animaux vivant dans une zone" },
+        { "id": "b", "text": "Des êtres vivants en interaction avec leur milieu de vie" },
+        { "id": "c", "text": "Un espace naturel protégé" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 4,
+      "title": "La résilience d’un écosystème correspond :",
+      "options": [
+        { "id": "a", "text": "À sa capacité à rester figé" },
+        { "id": "b", "text": "À sa capacité à revenir à une trajectoire après perturbation" },
+        { "id": "c", "text": "À sa capacité à produire plus de biomasse" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 5,
+      "title": "La pollinisation est un service écosystémique de type :",
+      "options": [
+        { "id": "a", "text": "Culturel" },
+        { "id": "b", "text": "De régulation" },
+        { "id": "c", "text": "D’approvisionnement" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 6,
+      "title": "Les forêts jouent un rôle important pour le climat car :",
+      "options": [
+        { "id": "a", "text": "Elles augmentent l’albédo" },
+        { "id": "b", "text": "Elles stockent du CO₂ atmosphérique" },
+        { "id": "c", "text": "Elles produisent des énergies fossiles" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 7,
+      "title": "Selon l’IPBES, environ quelle proportion des espèces est menacée d’extinction ?",
+      "options": [
+        { "id": "a", "text": "5 %" },
+        { "id": "b", "text": "25 %" },
+        { "id": "c", "text": "75 %" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 8,
+      "title": "On parle de 6e extinction de masse car :",
+      "options": [
+        { "id": "a", "text": "Elle concerne uniquement les animaux" },
+        { "id": "b", "text": "La vitesse de disparition des espèces est exceptionnelle" },
+        { "id": "c", "text": "Elle est due uniquement à des causes naturelles" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 9,
+      "title": "La cause principale actuelle de l’érosion de la biodiversité est :",
+      "options": [
+        { "id": "a", "text": "Les cycles climatiques naturels" },
+        { "id": "b", "text": "Les activités humaines" },
+        { "id": "c", "text": "Les météorites" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 10,
+      "title": "Quelle activité humaine contribue le plus à la destruction des habitats ?",
+      "options": [
+        { "id": "a", "text": "L’agriculture extensive" },
+        { "id": "b", "text": "L’urbanisation et l’agriculture intensive" },
+        { "id": "c", "text": "La pêche artisanale" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 11,
+      "title": "L’effet de serre correspond :",
+      "options": [
+        { "id": "a", "text": "À la réflexion du rayonnement solaire" },
+        { "id": "b", "text": "Au piégeage du rayonnement infrarouge par certains gaz" },
+        { "id": "c", "text": "À la destruction de la couche d’ozone" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 12,
+      "title": "Quel est le principal gaz responsable de l’effet de serre naturel ?",
+      "options": [
+        { "id": "a", "text": "Le dioxyde de carbone (CO₂)" },
+        { "id": "b", "text": "Le méthane (CH₄)" },
+        { "id": "c", "text": "La vapeur d’eau (H₂O)" }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": 13,
+      "title": "Les énergies fossiles se caractérisent par :",
+      "options": [
+        { "id": "a", "text": "Une faible densité énergétique" },
+        { "id": "b", "text": "Une forte densité énergétique et une disponibilité limitée" },
+        { "id": "c", "text": "Un caractère renouvelable à l’échelle humaine" }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": 14,
+      "title": "Quelle action favorise le mieux la préservation de la biodiversité ?",
+      "options": [
+        { "id": "a", "text": "Développer les monocultures" },
+        { "id": "b", "text": "Développer l’agroécologie" },
+        { "id": "c", "text": "Augmenter l’usage des pesticides" }
+      ],
+      "answer": "b"
+    }
+  ]
+}
+
+  
 
 
   
